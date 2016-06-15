@@ -1,0 +1,37 @@
+<main class="main">
+    <div class="container">
+        
+        <% if (message.length > 0) { %>
+        <div class="fast-msg">
+            <p><%= message %></p>
+        </div>
+        <% } %>
+        
+        <div class="panel">
+            <div class="form-box">
+                <form action="/signup" method="post">
+                    <div class="form-item">
+                        <input class="fill" type="text" placeholder="用户名">
+                    </div>
+                    <div class="form-item">
+                        <input class="fill" name="email" type="text" placeholder="邮箱">
+                    </div>
+                    <div class="form-item">
+                        <input class="fill" name="password" type="password" placeholder="密码">
+                    </div>
+                    <div class="form-item">
+                        <input class="fill" type="password" placeholder="确认密码">
+                    </div>
+                    <div class="form-item">
+                        <label>
+                    <input type="checkbox"> 我已经同意用户注册协议
+                  </label>
+                    </div>
+                    <div class="form-item">
+                        <button class="btn" type="submit">提交</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
