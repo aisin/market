@@ -11,7 +11,7 @@ module.exports = function(app){
 
     app.get('/signup', user.signup);
 
-    app.post('/signup', passport.authenticate('signup', {
+    app.post('/signup', user.doSignup, passport.authenticate('signup', {
         successRedirect : '/', // redirect to the secure profile section
         failureRedirect : '/signup', // redirect back to the signup page if there is an error
         failureFlash : true // allow flash messages
