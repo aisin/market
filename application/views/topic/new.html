@@ -1,13 +1,29 @@
 <div class="container">
     <div class="main">
+        <% if (message.length > 0) { %>
+        <div class="fast-msg">
+            <p><%= message %></p>
+        </div>
+        <% } %>
+        
         <div class="panel">
             <div class="form-box-full">
-                <form action="/signup" method="post">
+                <form action="/t/new" method="post">
                     <div class="form-item">
                         <input class="fill" name="topic" type="text" placeholder="请输入主题的标题">
                     </div>
                     <div class="form-item">
-                        <textarea class="fill" name="content" rows="10" placeholder="请输入主题的内容"></textarea>
+                        <textarea id="content" class="fill" name="content" rows="10" placeholder="请输入主题的内容"></textarea>
+                    </div>
+                    <div class="form-item">
+                        <select id="nodes" name="nodes" style="width:200px;" data-placeholder="请选择一个节点">
+                            <option></option>
+                            <option>问与答</option>
+                            <option>工作</option>
+                            <option>金融</option>
+                            <option>互联网</option>
+                            <option>IT</option>
+                        </select>
                     </div>
                     <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                     <div class="form-item">
@@ -19,6 +35,14 @@
     </div>
 </div>
 
-<% block('header').append('<link type="text/css" href="/foo.css">') %>
+<% block('head').append('<link rel="stylesheet" type="text/css" href="/libs/simditor/css/simditor.css" />') %>
+<% block('head').append('<link rel="stylesheet" type="text/css" href="/libs/select2/css/select2.min.css" />') %>
 
-<% block('footer').append('<script src="/bar.js"></script>') %>
+<% block('foot').append('<script type="text/javascript" src="/libs/simditor/js/module.min.js"></script>') %>
+<% block('foot').append('<script type="text/javascript" src="/libs/simditor/js/hotkeys.min.js"></script>') %>
+<% block('foot').append('<script type="text/javascript" src="/libs/simditor/js/uploader.min.js"></script>') %>
+<% block('foot').append('<script type="text/javascript" src="/libs/simditor/js/simditor.min.js"></script>') %>
+
+<% block('foot').append('<script type="text/javascript" src="/libs/select2/js/select2.min.js"></script>') %>
+
+<% block('foot').append('<script type="text/javascript" src="/js/topic.js"></script>') %>
