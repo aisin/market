@@ -19,12 +19,12 @@ module.exports = function(app){
 
     app.get('/login', user.login);
 
-    app.post('/login', passport.authenticate('login', {
+    app.post('/login', user.doLogin, passport.authenticate('login', {
         successRedirect : '/profile', // redirect to the secure profile section
         failureRedirect : '/login', // redirect back to the signup page if there is an error
         failureFlash : true // allow flash messages
     }));
 
     app.get('/profile', auth.userRequired, user.profile);
-  
+    
 };

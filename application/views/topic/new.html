@@ -1,0 +1,24 @@
+<div class="container">
+    <div class="main">
+        <div class="panel">
+            <div class="form-box-full">
+                <form action="/signup" method="post">
+                    <div class="form-item">
+                        <input class="fill" name="topic" type="text" placeholder="请输入主题的标题">
+                    </div>
+                    <div class="form-item">
+                        <textarea class="fill" name="content" rows="10" placeholder="请输入主题的内容"></textarea>
+                    </div>
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                    <div class="form-item">
+                        <button class="btn" type="submit">发布</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<% block('header').append('<link type="text/css" href="/foo.css">') %>
+
+<% block('footer').append('<script src="/bar.js"></script>') %>

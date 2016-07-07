@@ -1,6 +1,11 @@
-exports.index = function(req, res, next){
-    req.flash('homeMsg', 'this is the home page.');
+
+/**
+ * 首页
+ */
+
+exports.index = function (req, res, next) {
     res.render('home/index', {
+        user: req.user,
         message: req.flash('homeMsg')
     });
-}
+};

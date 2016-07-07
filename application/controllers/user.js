@@ -10,6 +10,8 @@ var User = require('../models/user');
 
 exports.signup = function (req, res, next) {
     res.render('user/signup', {
+        user: req.user,
+        csrfToken: req.csrfToken(),
         message : req.flash('signupMsg')
     });
 };
@@ -26,18 +28,13 @@ exports.doSignup = function (req, res, next) {
     
     ep.on('err', function(msg){
         req.flash('signupMsg', msg);
-        // res.redirect('/signup');
-        res.render('user/signup', {
-            message : req.flash('signupMsg'),
-            username : username,
-            email : email
-        });
+        res.redirect('/signup');
     });
         
     if(!username){
         return ep.emit('err', '用户名不能为空');
     }else if(!utils.isUserName(username)){
-        return ep.emit('err', '用户名格式不正确');
+        return ep.emit('err', '用户名请使用 5-12 位大小写字母、数字、下划线');
     }else if(!email){
         return ep.emit('err', '邮箱不能为空');
     }else if(!validator.isEmail(email)){
@@ -59,7 +56,10 @@ exports.doSignup = function (req, res, next) {
  */
 
 exports.login = function (req, res, next) {
+    console.log(req.user);
     res.render('user/login', {
+        user: req.user,
+        csrfToken: req.csrfToken(),
         message: req.flash('loginMsg')
     });
 }
@@ -68,7 +68,22 @@ exports.doLogin = function (req, res, next) {
     var username = _.trim(req.body.username),
         password = req.body.password;
         
-    next();
+    var ep = new EventProxy();
+    
+    ep.fail(next);
+    
+    ep.on('err', function(msg){
+        req.flash('loginMsg', msg);
+        res.redirect('/login');
+    });
+        
+    if(!username){
+        return ep.emit('err', '用户名不能为空');
+    }else if(!password){
+        return ep.emit('err', '密码不能为空');
+    }else{
+        next();
+    }
 }
 
 /**
@@ -76,6 +91,7 @@ exports.doLogin = function (req, res, next) {
  */
 
 exports.profile = function (req, res, next) {
+    console.log(req.user);
     res.render('user/profile', {
         user: req.user
     });

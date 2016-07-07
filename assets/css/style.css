@@ -207,6 +207,8 @@ textarea {
 .icon-praise:before { content: "\e7b6"; }
 .icon-menu:before { content: "\e64c"; }
 .icon-close:before { content: "\e603"; }
+.icon-x:before { content: "\e69a"; }
+
 
 
 /*===========================*/
@@ -261,8 +263,17 @@ p {
     padding-right: 15px*/
 }
 
+.clearfix:before,.clearfix:after{
+    content:""; 
+    display:table; 
+} 
+.clearfix:after{clear:both;} 
+.clearfix{ 
+    *zoom:1;/*IE/7/6*/
+}
+
 .container:before,.container:after {
-    content: " ";
+    content: "";
     display: table
 }
 
@@ -290,7 +301,7 @@ p {
 .logo{
     float: left;
     font-weight: normal;
-    margin-left: 15px;
+    /*margin-left: 15px;*/
 }
 
 .header-secondary{
@@ -342,9 +353,7 @@ p {
 
 /* Nodes */
 .nodes{
-    padding: 16px 15px;
-    margin-left: -15px;
-    margin-right: -15px;
+    padding: 10px 8px;
     background-color: #fafafa;
     border-bottom: 1px solid #ececec;
 }
@@ -364,15 +373,11 @@ p {
 
 /* Main */
 .main{
-    padding: 10px 0;
-    /*background: #f2f5e9;*/
+    padding: 15px 0;
 }
-
 .panel{
-    background-color: #fff;
     padding: 0 15px;
 }
-
 .box{
     background: #fff;
 }
@@ -393,7 +398,7 @@ article:last-child .item{
 }
 
 .item .inner{
-    padding: 0 0 0 62px;
+    padding: 0 0 0 58px;
 }
 
 .item .inner a{
@@ -402,17 +407,17 @@ article:last-child .item{
 
 .item .author{
     float: left;
-    margin-left: -62px;
-    margin-top: 15px;
+    margin-left: -58px;
+    margin-top: 12px;
     font-size: 0;
 }
 
 .item .all{
-    padding: 15px 0;
+    padding: 12px 0;
 }
 
 .item .all h2{
-    font-size: 16px;
+    font-size: 14px;
     font-weight: normal;
     margin-bottom: 8px;
     word-wrap: break-word;
@@ -449,6 +454,62 @@ article:last-child .item{
     line-height: 46px;
 }
 
+/* Profile */
+.profile{
+    padding: 20px 15px;
+    background: #eee;
+}
+.profile .avatar{
+    float: left;
+    margin: 0 30px 0 0;
+}
+.profile .avatar img{
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+}
+.profile .info{
+    float: left;
+}
+.profile .info .user-name{
+    font-size: 18px;
+    font-weight: bold;
+}
+.profile .info .modify{
+    margin: 15px 0 0 0;
+}
+.category-tab{
+    display: -webkit-flex;
+    display: flex;
+}
+.category-tab .element{
+    -webkit-flex: 1;
+    flex: 1;
+    text-align: center;
+    border-bottom: 1px solid #eee;
+}
+.category-tab .element + .element{
+    border-left: 1px solid #eee;
+}
+.category-tab .element.active{
+    border-bottom: 2px solid #02b875;
+}
+.category-tab .element.active a{
+    color: #02b875;
+}
+.category-tab .element a{
+    display: block;
+    padding: 12px;
+    font-size: 14px;
+    color: #333;
+}
+.category-tab .element:hover{
+    border-bottom: 2px solid #02b875;
+}
+.category-tab .element:hover a{
+    color: #02b875;
+}
+
 /* Footer */
 .footer{
     padding: 20px 0;
@@ -460,17 +521,23 @@ article:last-child .item{
     margin: 0 auto;
     padding: 15px 0;
 }
+.form-box-full{
+    padding: 15px 0;
+}
 .form-item{
     margin-bottom: 15px;
 }
 .form-item .fill{
     width: 100%;
     display: block;
-    padding: 0px 8px;
+    padding: 6px 8px;
     border: 1px solid #e8e8e8;
-    height: 36px;
-    line-height: 34px;
-    border-radius: 4px;
+    height: 34px;
+    border-radius: 2px;
+    line-height: 1.4;
+}
+.form-item textarea.fill{
+    height: auto;
 }
 .form-item .fill:focus{
     border: 1px solid #02b875;
@@ -480,16 +547,39 @@ article:last-child .item{
     vertical-align: middle;
     margin-top: -2px;
 }
+.form-item + .form-tips{
+    margin-top: -10px;
+    margin-bottom: 5px;
+    color: #999;
+    font-size: 12px;
+}
 .btn{
     width: 100%;
     display: block;
     border: 1px solid #02b875;
-    border-radius: 4px;
-    height: 36px;
-    line-height: 36px;
+    border-radius: 2px;
+    line-height: 1.4;
+    padding: 6px 12px;
     text-align: center;
     background-color: transparent;
     cursor: pointer;
+    white-space: nowrap;
+    vertical-align: middle;
+    font-weight: 400;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.btn-sm{
+    padding: 5px 10px;
+    font-size: 12px;
+    line-height: 1.5;
+}
+.btn-xs{
+    padding: 1px 5px;
+    font-size: 12px;
+    line-height: 1.5;
 }
 
 .btn:hover{
@@ -507,7 +597,7 @@ article:last-child .item{
     margin: 0;
 }
 
-/* Common Components */
+/* Common parts */
 
 .menu{
     display: inline-block;
@@ -532,8 +622,53 @@ article:last-child .item{
     padding: 0 2px;
 }
 
+.hide{
+    display: none!important;
+}
+
 .white{
     background-color: #fff;
+}
+
+/* Common Components */
+
+.modal{
+    position: fixed;
+    z-index: 99;
+    width: 100vw;
+    height: 100vh;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 1);
+    color: #fff;
+    padding: 15px 0;
+    display: none;
+}
+.modal .hd{
+    position: relative;
+    margin-bottom: 10px;
+}
+.modal .hd .close{
+    position: absolute;
+    padding: 2px 6px;
+    display: inline-block;
+    top: -3px;
+    font-size: 20px;
+    left: -8px;
+}
+.modal .hd h2{
+    text-align: center;
+    font-weight: normal;
+}
+.modal .nav a{
+    display: block;
+    padding: 12px 0;
+    border-bottom: 1px solid #333;
+}
+.modal a{
+    color: #fff;
 }
 
 /* Media Query */
@@ -547,6 +682,12 @@ article:last-child .item{
     }
 }
 
+@media (max-width: 992px){
+    .logo{
+        margin-left: 15px;
+    }
+}
+
 @media (max-width: 768px){
     .logo{
         float: none;
@@ -554,7 +695,6 @@ article:last-child .item{
         margin-left: 0;
     }
     .main{
-        background-color: #fff;
         padding: 0 0;
     }
     .show-wide{

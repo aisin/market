@@ -1,6 +1,5 @@
-<main class="main">
-    <div class="container">
-        
+<div class="container">
+    <div class="main">
         <% if (message.length > 0) { %>
         <div class="fast-msg">
             <p><%= message %></p>
@@ -13,6 +12,9 @@
                     <div class="form-item">
                         <input class="fill" name="username" type="text" placeholder="用户名" value="<%= typeof username !== 'undefined' ? username : '' %>">
                     </div>
+                    <div class="form-tips">
+                        请按照要求输入账号
+                    </div>
                     <div class="form-item">
                         <input class="fill" name="email" type="text" placeholder="邮箱" value="<%= typeof email !== 'undefined' ? email : '' %>">
                     </div>
@@ -24,9 +26,10 @@
                     </div>
                     <div class="form-item">
                         <label>
-                    <input type="checkbox"> 我已经同意用户注册协议
-                  </label>
+                            <input type="checkbox"> 我已经同意用户注册协议
+                        </label>
                     </div>
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                     <div class="form-item">
                         <button class="btn" type="submit">提交</button>
                     </div>
@@ -34,4 +37,4 @@
             </div>
         </div>
     </div>
-</main>
+</div>

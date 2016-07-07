@@ -6,6 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var flash = require('connect-flash');
 var mongoose = require('mongoose');
+var csrf = require('csurf');
 var config = require('./config.js');
 
 var app = express();
@@ -17,6 +18,7 @@ app.use(express.static(path.join(__dirname, 'assets')));
 app.use(cookieParser(config.session.secret));
 app.use(bodyParser.json({ limit: '1mb' }));
 app.use(bodyParser.urlencoded({extended: true, limit: '1mb'}));
+app.use(csrf({ cookie: true }));
 
 app.set('view engine', 'html');
 app.engine('html', ejsMate);
@@ -34,6 +36,14 @@ app.use(session({
 }));
 
 app.use(flash());
+
+app.use(function (err, req, res, next) {
+    if (err.code !== 'EBADCSRFTOKEN') return next(err);
+
+    // handle CSRF token errors here
+    res.status(403);
+    res.send('session has expired or form tampered with');
+});
 
 // Routes
 require('./application/routes')(app);
