@@ -587,6 +587,10 @@ article:last-child .item{
     color: #fff;
 }
 
+.btn:active{
+    box-shadow: inset 0px 2px 3px 0px #048c5a;
+}
+
 .fast-msg{
     padding: 6px 15px;
     background-color: #f37878;
