@@ -1,3 +1,14 @@
+/**
+ * 全局消息提醒
+ */
+
+function Message (msg) {
+    layer.msg(msg, {
+        offset: 10,
+        shift: 6
+    });
+}
+
 (function ($) {
 
     this.Modal = function () {

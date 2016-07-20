@@ -6,10 +6,13 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var flash = require('connect-flash');
 var mongoose = require('mongoose');
+var moment = require('moment');
 var csrf = require('csurf');
 var config = require('./config.js');
 
 var app = express();
+
+moment.locale('zh-cn');
 
 app.set('port', (process.env.PORT || config.site.port));
 app.set('views', path.join(__dirname, config.path.views));
@@ -22,7 +25,14 @@ app.use(csrf({ cookie: true }));
 
 app.set('view engine', 'html');
 app.engine('html', ejsMate);
-app.locals._layoutFile = 'layout.html';
+// app.locals._layoutFile = 'layout.html';
+
+app.locals.moment = moment;
+
+app.get(/^(?!\/admin).*$/, function(req, res, next){
+    res.locals._layoutFile = 'layout.html';
+    next();
+});
 
 // Session
 app.use(session({

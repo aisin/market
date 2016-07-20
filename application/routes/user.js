@@ -26,5 +26,7 @@ module.exports = function(app){
     }));
 
     app.get('/profile', auth.userRequired, user.profile);
+
+    app.get('/logout', user.logout);
     
 };

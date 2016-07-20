@@ -1,0 +1,51 @@
+<%- partial('../common/header') %>
+
+<%- partial('../common/sidebar') %>
+
+
+
+    <!--主要内容开始-->
+
+    <div class="content-wrapper">
+        <section class="content-header">
+            <h1>分类添加</h1>
+        </section>
+        
+        <%- partial('../common/message') %>
+
+        <section class="content">
+            <div class="row">
+                <div class="col-md-6">
+                    <!-- Horizontal Form-->
+                    <div class="box box-info">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">分类添加</h3>
+                        </div>
+                        <!-- /.box-header-->
+                        <!-- form start-->
+                        <form action="/admin/category/add" method="post" class="form-horizontal">
+                            <div class="box-body">
+                                <div class="form-group">
+                                    <label for="inputEmail3" class="col-sm-2 control-label">分类名称</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" name="categoryName" placeholder="分类名称" class="form-control" />
+                                    </div>
+                                </div>
+                            </div>
+                            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                            <!-- /.box-body-->
+                            <div class="box-footer">
+                                <button type="reset" class="btn btn-default">取消</button>
+                                <button type="submit" class="btn btn-info pull-right">确定</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!--主要内容结束-->
+
+<%- partial('../common/footer') %>

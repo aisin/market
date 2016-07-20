@@ -1,4 +1,4 @@
-<div class="hero show-wide">
+<div class="hero show-wide hide">
     <a href="#1">
         <img src="http://ac-mhke0kuv.clouddn.com/3ba295d574579cbe676e.png">
     </a>
@@ -13,38 +13,35 @@
         
         <div class="nodes">
             <div class="container">
-            <a class="node" href="#">问与答</a>
-            <a class="node" href="#">Node.js</a>
-            <a class="node" href="#">前端开发</a>
-            <a class="node" href="#">技术讨论</a>
-            <a class="node" href="#">启蒙</a>
-            <a class="node" href="#">学术会</a>
-            <a class="node" href="#">最酷</a>
+            <% for(var i=0; i<categories.length; i++) { %>
+                <a class="node" href="/cat/<%= categories[i]._id %>"><%= categories[i].name %></a>
+            <% } %>
             </div>
         </div>
 
         <div class="panel">
+            <% for(var i=0; i<topics.length; i++) { %>
             <article>
                 <div class="item">
                 <div class="inner">
-                    <a class="author" href="#">
-                    <img class="avatar" src="https://cdn.v2ex.co/avatar/1984/54f4/171138_normal.png?m=1461906290">
+                    <a class="author" href="/u/<%= topics[i].author._id %>">
+                    <img class="avatar" alt="<%= topics[i].author.username %>" src="https://cdn.v2ex.co/avatar/1984/54f4/171138_normal.png?m=1461906290">
                     </a>
                     <div class="all">
                     <h2>
-                        <a href="#">[招聘] 扒一扒云校的技术有多牛？</a>
+                        <a href="/t/<%= topics[i]._id %>"><%= topics[i].title %></a>
                     </h2>
                     <div class="meta">
                         <span class="node">
-                        <a href="#">问与答</a>
+                        <a href="/cat/<%= topics[i].category._id %>"><%= topics[i].category.name %></a>
                         </span>
                         <span class="separator">·</span>
                         <span class="last-reply">
-                        几秒前
+                        <%= moment(topics[i].create_at).fromNow() %>
                         </span>
                         <span class="separator">·</span>
                         <span class="up">
-                        <i class="icon icon-praise"></i> 6
+                        <i class="icon icon-praise"></i> <%= topics[i].like %>
                         </span>
                         <span class="cmts">
                         <i class="icon icon-comment"></i> 8
@@ -54,276 +51,7 @@
                 </div>
                 </div>
             </article>
-            <article>
-                <div class="item">
-                <div class="inner">
-                    <a class="author" href="#">
-                    <img class="avatar" src="https://cdn.v2ex.co/avatar/29d1/8ba7/110280_normal.png?m=1453390523">
-                    </a>
-                    <div class="all">
-                    <h2>
-                        <a href="#">现货 Intel NUC 6i7KYK 骷髅峡谷 6 代 i7</a>
-                    </h2>
-                    <div class="meta">
-                        <span class="node">
-                        <a href="#">前端开发</a>
-                        </span>
-                        <span class="separator">·</span>
-                        <span class="last-reply">
-                        3小时前
-                        </span>
-                        <span class="separator">·</span>
-                        <span class="up">
-                        <i class="icon-thumbs-up"></i> 6
-                        </span>
-                        <span class="cmts">
-                        <i class="icon-comments"></i> 8
-                        </span>
-                    </div>
-                    </div>
-                </div>
-                </div>
-            </article>
-            <article>
-                <div class="item">
-                <div class="inner">
-                    <a class="author" href="#">
-                    <img class="avatar" src="https://cdn.v2ex.co/avatar/e141/5faa/40182_normal.png?m=1395795894">
-                    </a>
-                    <div class="all">
-                    <h2>
-                        <a href="#">开发环境和生产环境下的文件不一致，怎么执行自动化部署呢？</a>
-                    </h2>
-                    <div class="meta">
-                        <span class="node">
-                        <a href="#">问与答</a>
-                        </span>
-                        <span class="separator">·</span>
-                        <span class="last-reply">
-                        几秒前
-                        </span>
-                        <span class="separator">·</span>
-                        <span class="up">
-                        <i class="icon-thumbs-up"></i> 6
-                        </span>
-                        <span class="cmts">
-                        <i class="icon-comments"></i> 8
-                        </span>
-                    </div>
-                    </div>
-                </div>
-                </div>
-            </article>
-            <article>
-                <div class="item">
-                <div class="inner">
-                    <a class="author" href="#">
-                    <img class="avatar" src="https://cdn.v2ex.co/gravatar/a70d8abf2ddc670668f02d9e9287fdf0?s=48&d=retro">
-                    </a>
-                    <div class="all">
-                    <h2>
-                        <a href="#">「GG.ST」把 MT.GOX 总裁 MARK 的域名抢注了。</a>
-                    </h2>
-                    <div class="meta">
-                        <span class="node">
-                        <a href="#">问与答</a>
-                        </span>
-                        <span class="separator">·</span>
-                        <span class="last-reply">
-                        几秒前
-                        </span>
-                        <span class="separator">·</span>
-                        <span class="up">
-                        <i class="icon icon-praise"></i> 6
-                        </span>
-                        <span class="cmts">
-                        <i class="icon icon-comment"></i> 8
-                        </span>
-                    </div>
-                    </div>
-                </div>
-                </div>
-            </article>
-            <article>
-                <div class="item">
-                <div class="inner">
-                    <a class="author" href="#">
-                    <img class="avatar" src="https://cdn.v2ex.co/avatar/3ddf/3353/97858_normal.png?m=1453443238">
-                    </a>
-                    <div class="all">
-                    <h2>
-                        <a href="#">想买个手机当备机，有什么推荐的没？</a>
-                    </h2>
-                    <div class="meta">
-                        <span class="node">
-                        <a href="#">问与答</a>
-                        </span>
-                        <span class="separator">·</span>
-                        <span class="last-reply">
-                        几秒前
-                        </span>
-                        <span class="separator">·</span>
-                        <span class="up">
-                        <i class="icon-thumbs-up"></i> 6
-                        </span>
-                        <span class="cmts">
-                        <i class="icon-comments"></i> 8
-                        </span>
-                    </div>
-                    </div>
-                </div>
-                </div>
-            </article>
-            <article>
-                <div class="item">
-                <div class="inner">
-                    <a class="author" href="#">
-                    <img class="avatar" src="http://discuss.flarum.org.cn/assets/avatars/d36wm2wlx6blbvz0.jpg">
-                    </a>
-                    <div class="all">
-                    <h2>
-                        <a href="#">	[招聘] 扒一扒云校的技术有多牛？</a>
-                    </h2>
-                    <div class="meta">
-                        <span class="node">
-                        <a href="#">问与答</a>
-                        </span>
-                        <span class="separator">·</span>
-                        <span class="last-reply">
-                        几秒前
-                        </span>
-                        <span class="separator">·</span>
-                        <span class="up">
-                        <i class="icon-thumbs-up"></i> 6
-                        </span>
-                        <span class="cmts">
-                        <i class="icon-comments"></i> 8
-                        </span>
-                    </div>
-                    </div>
-                </div>
-                </div>
-            </article>
-            <article>
-                <div class="item">
-                <div class="inner">
-                    <a class="author" href="#">
-                    <img class="avatar" src="https://cdn.v2ex.co/avatar/29d1/8ba7/110280_normal.png?m=1453390523">
-                    </a>
-                    <div class="all">
-                    <h2>
-                        <a href="#">现货 Intel NUC 6i7KYK 骷髅峡谷 6 代 i7</a>
-                    </h2>
-                    <div class="meta">
-                        <span class="node">
-                        <a href="#">前端开发</a>
-                        </span>
-                        <span class="separator">·</span>
-                        <span class="last-reply">
-                        3小时前
-                        </span>
-                        <span class="separator">·</span>
-                        <span class="up">
-                        <i class="icon-thumbs-up"></i> 6
-                        </span>
-                        <span class="cmts">
-                        <i class="icon-comments"></i> 8
-                        </span>
-                    </div>
-                    </div>
-                </div>
-                </div>
-            </article>
-            <article>
-                <div class="item">
-                <div class="inner">
-                    <a class="author" href="#">
-                    <img class="avatar" src="https://cdn.v2ex.co/avatar/e141/5faa/40182_normal.png?m=1395795894">
-                    </a>
-                    <div class="all">
-                    <h2>
-                        <a href="#">开发环境和生产环境下的文件不一致，怎么执行自动化部署呢？</a>
-                    </h2>
-                    <div class="meta">
-                        <span class="node">
-                        <a href="#">问与答</a>
-                        </span>
-                        <span class="separator">·</span>
-                        <span class="last-reply">
-                        几秒前
-                        </span>
-                        <span class="separator">·</span>
-                        <span class="up">
-                        <i class="icon-thumbs-up"></i> 6
-                        </span>
-                        <span class="cmts">
-                        <i class="icon-comments"></i> 8
-                        </span>
-                    </div>
-                    </div>
-                </div>
-                </div>
-            </article>
-            <article>
-                <div class="item">
-                <div class="inner">
-                    <a class="author" href="#">
-                    <img class="avatar" src="https://cdn.v2ex.co/gravatar/a70d8abf2ddc670668f02d9e9287fdf0?s=48&d=retro">
-                    </a>
-                    <div class="all">
-                    <h2>
-                        <a href="#">「GG.ST」把 MT.GOX 总裁 MARK 的域名抢注了。</a>
-                    </h2>
-                    <div class="meta">
-                        <span class="node">
-                        <a href="#">问与答</a>
-                        </span>
-                        <span class="separator">·</span>
-                        <span class="last-reply">
-                        几秒前
-                        </span>
-                        <span class="separator">·</span>
-                        <span class="up">
-                        <i class="icon-thumbs-up"></i> 6
-                        </span>
-                        <span class="cmts">
-                        <i class="icon-comments"></i> 8
-                        </span>
-                    </div>
-                    </div>
-                </div>
-                </div>
-            </article>
-            <article>
-                <div class="item">
-                <div class="inner">
-                    <a class="author" href="#">
-                    <img class="avatar" src="https://cdn.v2ex.co/avatar/3ddf/3353/97858_normal.png?m=1453443238">
-                    </a>
-                    <div class="all">
-                    <h2>
-                        <a href="#">想买个手机当备机，有什么推荐的没？</a>
-                    </h2>
-                    <div class="meta">
-                        <span class="node">
-                        <a href="#">问与答</a>
-                        </span>
-                        <span class="separator">·</span>
-                        <span class="up">
-                        <i class="icon-thumbs-up"></i> 6
-                        </span>
-                        <span class="cmts">
-                        <i class="icon-comments"></i> 8
-                        </span>
-                        <span class="separator">·</span>
-                        <span class="last-reply">
-                        几秒前
-                        </span>
-                    </div>
-                    </div>
-                </div>
-                </div>
-            </article>
+            <% } %>
         </div>
     </div>
 

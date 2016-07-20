@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>Login - Market Admin</title>
+    <link href="/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link href="/admin/css/admin.min.css" rel="stylesheet">
+</head>
+
+<body class="hold-transition login-page">
+    <div class="login-box">
+        <div class="login-logo"><a href="/"><b>Market</b> Admin</a></div>
+        <!-- /.login-logo-->
+        <div class="login-box-body">
+            <p class="login-box-msg">Login to start your administration</p>
+            <form action="/admin/login" method="post">
+                <div class="form-group has-feedback">
+                    <input type="text" name="username" value="" placeholder="Username" class="form-control"><span class="glyphicon glyphicon-user form-control-feedback"></span>
+                </div>
+                <div class="form-group has-feedback">
+                    <input type="password" name="password" placeholder="Password" class="form-control"><span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                </div>
+                <div class="row">
+                    <div class="col-xs-8">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox">Remember Me
+                            </label>
+                        </div>
+                    </div>
+                    <!-- /.col-->
+                    <div class="col-xs-4">
+                        <button type="submit" class="btn btn-primary btn-block btn-flat">Login</button>
+                    </div>
+                </div>
+            </form>
+            
+        </div>
+    </div>
+</body>
+
+</html>

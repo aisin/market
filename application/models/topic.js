@@ -5,11 +5,13 @@ var topicSchema = new Schema({
 
     title : String,
     content : String,
-    nodes : {
+
+    category : {
         type : Schema.Types.ObjectId,
         ref : 'Category'
     },
-    author_id: {
+
+    author: {
         type : Schema.Types.ObjectId,
         ref : 'User'
     },
@@ -17,7 +19,12 @@ var topicSchema = new Schema({
         type : Schema.Types.ObjectId,
         ref : 'User'
     },
+
     views: {
+        type: Number,
+        default: 0
+    },
+    like: {
         type: Number,
         default: 0
     },

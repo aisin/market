@@ -1,0 +1,58 @@
+<%- partial('../common/header') %>
+
+<%- partial('../common/sidebar') %>
+
+
+
+    <!--主要内容开始-->
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header)-->
+    <section class="content-header">
+        <h1>分类列表</h1>
+    </section>
+    <!-- Main content-->
+    <section class="content">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title">所有分类</h3>
+                        <div class="box-tools">
+                            <div style="width: 150px;" class="input-group">
+                                <input type="text" name="table_search" placeholder="Search" class="form-control input-sm pull-right" />
+                                <div class="input-group-btn">
+                                    <button class="btn btn-sm btn-default"><i class="fa fa-search"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-body table-responsive no-padding">
+                        <table class="table table-hover">
+                            <tr>
+                                <th>ID</th>
+                                <th>名称</th>
+                                <th>创建时间</th>
+                                <th>修改时间</th>
+                                <th>主题数</th>
+                                <% for(var i=0; i<categories.length; i++) { %>
+                                <tr>
+                                    <td><%= i+1 %></td>
+                                    <td><%= categories[i].name %></td>
+                                    <td><%= moment(categories[i].create_at).format("YYYY-MM-DD HH:mm:ss") %></td>
+                                    <td><%= moment(categories[i].update_at).format("YYYY-MM-DD HH:mm:ss") %></td>
+                                    <td><%= categories[i].count %></td>
+                                </tr>
+                                <% } %>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+    <!--主要内容结束-->
+
+<%- partial('../common/footer') %>

@@ -10,6 +10,7 @@ var User = require('../models/user');
 
 exports.signup = function (req, res, next) {
     res.render('user/signup', {
+        title: '注册',
         user: req.user,
         csrfToken: req.csrfToken(),
         message : req.flash('signupMsg')
@@ -58,6 +59,7 @@ exports.doSignup = function (req, res, next) {
 exports.login = function (req, res, next) {
     console.log(req.user);
     res.render('user/login', {
+        title: '登录',
         user: req.user,
         csrfToken: req.csrfToken(),
         message: req.flash('loginMsg')
@@ -93,6 +95,16 @@ exports.doLogin = function (req, res, next) {
 exports.profile = function (req, res, next) {
     console.log(req.user);
     res.render('user/profile', {
+        title: '个人中心',
         user: req.user
     });
+}
+
+/**
+ * Logout
+ */
+
+exports.logout = function (req, res) {
+    req.logout();
+    res.redirect('/');
 }

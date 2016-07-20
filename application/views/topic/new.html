@@ -8,7 +8,7 @@
         
         <div class="panel">
             <div class="form-box-full">
-                <form action="/t/new" method="post">
+                <form id="newTopic" action="/t/new" method="post">
                     <div class="form-item">
                         <input id="title" class="fill" name="title" type="text" placeholder="请输入主题的标题">
                     </div>
@@ -16,13 +16,11 @@
                         <textarea id="content" class="fill" name="content" rows="10" placeholder="请输入主题的内容"></textarea>
                     </div>
                     <div class="form-item">
-                        <select id="nodes" name="nodes" style="width:200px;" data-placeholder="请选择一个节点">
+                        <select id="category" name="category" style="width:200px;" data-placeholder="请选择一个节点">
                             <option></option>
-                            <option>问与答</option>
-                            <option>工作</option>
-                            <option>金融</option>
-                            <option>互联网</option>
-                            <option>IT</option>
+                            <% for(var i=0; i<categories.length; i++) { %>
+                            <option value="<%= categories[i]._id %>"><%= categories[i].name %></option>
+                            <% } %>
                         </select>
                     </div>
                     <input type="hidden" name="_csrf" value="<%= csrfToken %>">
