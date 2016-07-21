@@ -1,4 +1,4 @@
-var EventProxy = require('eventproxy');
+var Eventproxy = require('eventproxy');
 var Category = require('../models/category');
 var topicLib = require('../libs/topic');
 
@@ -8,7 +8,7 @@ var topicLib = require('../libs/topic');
 
 exports.getCatgoryList = function (callback) {
     Category.find({}, function(err, categories){
-        var ep = new EventProxy();
+        var ep = new Eventproxy();
 
         ep.after('count', categories.length, function(){
             callback(err, categories);

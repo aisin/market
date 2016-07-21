@@ -1,4 +1,4 @@
-var EventProxy = require('eventproxy');
+var Eventproxy = require('eventproxy');
 var Topic = require('../models/topic');
 var categoryLib = require('../libs/category');
 
@@ -28,10 +28,10 @@ exports.index = function (req, res, next) {
             }])
         .sort({ update_at: -1 })
         .exec(function (err, topics) {
-            var ep = new EventProxy();
+            var ep = new Eventproxy();
             ep.fail(next);
 
-            var events = ['topicsDone', 'category'];
+            var events = ['topics', 'category'];
             ep.all(events, function (topics, categories) {
                 res.render('home/index', {
                     title: '首页',
@@ -41,7 +41,7 @@ exports.index = function (req, res, next) {
                 })
             });
 
-            ep.emit('topicsDone', topics);
+            ep.emit('topics', topics);
 
             // 获取分类
 

@@ -16,7 +16,6 @@ exports.newTopic = function (req, res, next) {
             title: '发布话题',
             user: req.user,
             categories: categories,
-            csrfToken: req.csrfToken(),
             message: req.flash('newTopicMsg')
         });
     });
@@ -32,7 +31,7 @@ exports.doNewTopic = function (req, res, next) {
         title: _.trim(req.body.title),
         content: _.trim(req.body.content),
         category: req.body.category,
-        author_id: req.user._id,
+        author: req.user._id,
         last_reply: req.user._id
     };
 
@@ -59,5 +58,71 @@ exports.doNewTopic = function (req, res, next) {
     new Topic(_topic).save(function (err, result) {
         if (err) return next(err);
         ep.emit('ok');
+    });
+}
+
+/**
+ * 话题详情
+ */
+
+exports.detail = function (req, res, next) {
+
+    var me = req.user && req.user._id,
+        id = req.params.id;
+    ep = new Eventproxy();
+
+    var events = ['topic'];
+    ep.fail(next);
+
+    ep.all(events, function (topic) {
+        res.render('topic/detail', {
+            topic: topic
+        });
+    });
+
+    console.log(me);
+
+    // res.render('topic/detail');
+
+
+    Topic.findOne({ _id: id /*, deleted: false*/ })
+        .populate([{
+            path: 'category',
+            select: 'name'
+        }, {
+                path: 'author',
+                select: 'username'
+            }])
+        .exec(function (err, topic) {
+            if (!topic) {
+                ep.unbind();
+                return res.renderErr({
+                    message: '主题详情'
+                });
+            }
+            if (topic.deleted) {
+                ep.unbind();
+                return res.renderErr({
+                    message: '话题已经被删除'
+                });
+            }
+            // topic.views += 1;
+            // topic.save();
+            // topic.thanked = thread.thanks.indexOf(me) > -1 ? true : false
+            ep.emit('topic', topic);
+        });
+}
+
+/**
+ * 话题 Like
+ */
+
+exports.like = function (req, res, next) {
+
+    var me = req.user && req.user._id,
+        id = req.body.id;
+
+    Topic.update({ _id: id }, { $push: { like: me } }).exec(function () {
+        res.json({ success: true, message: '喜欢成功' });
     });
 }

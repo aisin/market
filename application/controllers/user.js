@@ -1,4 +1,4 @@
-var EventProxy = require('eventproxy');
+var Eventproxy = require('eventproxy');
 var _ = require('lodash');
 var validator = require('validator');
 var utils = require('../common/utils');
@@ -12,7 +12,6 @@ exports.signup = function (req, res, next) {
     res.render('user/signup', {
         title: '注册',
         user: req.user,
-        csrfToken: req.csrfToken(),
         message : req.flash('signupMsg')
     });
 };
@@ -23,7 +22,7 @@ exports.doSignup = function (req, res, next) {
         password = req.body.password,
         passwordcf = req.body.passwordcf;
         
-    var ep = new EventProxy();
+    var ep = new Eventproxy();
     
     ep.fail(next);
     
@@ -57,11 +56,10 @@ exports.doSignup = function (req, res, next) {
  */
 
 exports.login = function (req, res, next) {
-    console.log(req.user);
+    console.log('req.user: ', req.user);
     res.render('user/login', {
         title: '登录',
         user: req.user,
-        csrfToken: req.csrfToken(),
         message: req.flash('loginMsg')
     });
 }
@@ -70,7 +68,7 @@ exports.doLogin = function (req, res, next) {
     var username = _.trim(req.body.username),
         password = req.body.password;
         
-    var ep = new EventProxy();
+    var ep = new Eventproxy();
     
     ep.fail(next);
     
@@ -93,7 +91,7 @@ exports.doLogin = function (req, res, next) {
  */
 
 exports.profile = function (req, res, next) {
-    console.log(req.user);
+    console.log('req.user : ', req.user);
     res.render('user/profile', {
         title: '个人中心',
         user: req.user

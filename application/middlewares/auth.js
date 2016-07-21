@@ -4,12 +4,9 @@
 
 exports.userRequired = function(req, res, next) {
 
-    // if user is authenticated in the session, carry on 
-    if (req.isAuthenticated())
-        return next();
+    if (req.isAuthenticated()) return next();
 
-    // if they aren't redirect them to the home page
-    res.redirect('/login');
+    return req.xhr ? res.json({ success: false, message: '请登录后再操作'}) : res.redirect('/login');
 }
 
 /**
@@ -18,8 +15,7 @@ exports.userRequired = function(req, res, next) {
 
 exports.adminRequired = function(req, res, next){
 
-    if(req.isAuthenticated() && req.user.role === 'admin') 
-        return next();
-        
-    res.redirect('/');
+    if(req.isAuthenticated() && req.user.role === 'admin') return next();
+
+    return req.xhr ? res.json({ success: false, message: '请登录管理员账号后再操作'}) : res.redirect('/');
 }

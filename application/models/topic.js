@@ -24,10 +24,7 @@ var topicSchema = new Schema({
         type: Number,
         default: 0
     },
-    like: {
-        type: Number,
-        default: 0
-    },
+    like: [Schema.Types.ObjectId],
     
     locked: {
         type: Boolean,

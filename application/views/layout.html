@@ -12,9 +12,14 @@
         XLD
     <% } %>
 </title>
+
 <%- block('head').toString() %>
 
 <link rel="stylesheet" href="/css/style.css">
+
+<script type="text/javascript">
+window.G = { _csrf : "<%= _csrf %>" };
+</script>
 </head>
 
 <body>

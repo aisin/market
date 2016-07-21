@@ -35,16 +35,16 @@
                         <span class="node">
                         <a href="/cat/<%= topics[i].category._id %>"><%= topics[i].category.name %></a>
                         </span>
-                        <span class="separator">·</span>
+                        <span class="dot"></span>
                         <span class="last-reply">
                         <%= moment(topics[i].create_at).fromNow() %>
                         </span>
-                        <span class="separator">·</span>
+                        <span class="dot"></span>
                         <span class="up">
-                        <i class="icon icon-praise"></i> <%= topics[i].like %>
+                            <i class="icon icon-praise"></i> <%= topics[i].like.length %>
                         </span>
                         <span class="cmts">
-                        <i class="icon icon-comment"></i> 8
+                            <i class="icon icon-comment"></i> 8
                         </span>
                     </div>
                     </div>

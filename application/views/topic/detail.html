@@ -1,0 +1,44 @@
+<div class="container">
+    <div class="main">
+
+
+        <div class="panel">
+            <div class="detail">
+                <div class="hd">
+                    <div class="info">
+                        <h1 class="title"><%= topic.title %></h1>
+                        <div class="meta">
+                            <span class="node">
+                                <a href="/cat/<%= topic.category._id %>"><%= topic.category.name %></a>
+                            </span>
+                            <span class="dot"></span>
+                            <%= topic.author.username %>
+                            <span class="dot"></span>
+                            <%= moment(topic.create_at).fromNow() %>
+                            <span class="dot"></span>
+                            <%= topic.views %> 次浏览
+                        </div>
+                    </div>
+                    <div class="avatar">
+                        <img src="https://cdn.v2ex.co/avatar/1984/54f4/171138_normal.png">
+                    </div>
+                </div>
+                <div class="bd">
+                    <div class="content">
+                        <%- topic.content %>
+                    </div>
+                    <div class="operation">
+                        <span class="up one J_TopicLike" data-id="<%= topic._id %>">
+                            <i class="icon icon-praise"></i> <%= topic.like.length %>
+                        </span>
+                        <span class="cmts one">
+                            <i class="icon icon-comment"></i> 8
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<% block('foot').append('<script type="text/javascript" src="/js/topic.js"></script>') %>

@@ -1,4 +1,4 @@
-var EventProxy = require('eventproxy');
+var Eventproxy = require('eventproxy');
 var Topic = require('../models/topic');
 
 /**

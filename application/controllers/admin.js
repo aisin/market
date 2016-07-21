@@ -1,4 +1,4 @@
-var EventProxy = require('eventproxy');
+var Eventproxy = require('eventproxy');
 var _ = require('lodash');
 var Category = require('../models/category');
 var adminLib = require('../libs/admin');
@@ -22,7 +22,7 @@ exports.dashboard = function (req, res, next) {
 exports.categoryList = function (req, res, next) {
     adminLib.getCatgoryList(function(err, categories){
         if(err) return next(err);
-        
+
         res.render('admin/category/list', {
             categories: categories
         });
@@ -35,7 +35,6 @@ exports.categoryList = function (req, res, next) {
 
 exports.categoryAdd = function (req, res, next) {
     res.render('admin/category/add', {
-        csrfToken: req.csrfToken(),
         message: req.flash('categoryMsg')
     });
 }
@@ -48,7 +47,7 @@ exports.doCategoryAdd = function (req, res, next) {
     var name = _.trim(req.body.categoryName);
     var category = new Category();
 
-    var ep = new EventProxy();
+    var ep = new Eventproxy();
 
     ep.fail(next);
 
