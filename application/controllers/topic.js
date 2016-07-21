@@ -38,8 +38,8 @@ exports.doNewTopic = function (req, res, next) {
     var ep = new Eventproxy();
     ep.fail(next);
 
-    ep.on('ok', function () {
-        res.redirect('/');
+    ep.on('ok', function (topic) {
+        res.redirect('/t/' + topic._id);
     });
 
     ep.on('err', function (msg) {
@@ -55,9 +55,9 @@ exports.doNewTopic = function (req, res, next) {
         return ep.emit('err', '请为话题选择一个节点');
     }
 
-    new Topic(_topic).save(function (err, result) {
+    new Topic(_topic).save(function (err, topic) {
         if (err) return next(err);
-        ep.emit('ok');
+        ep.emit('ok', topic);
     });
 }
 
@@ -93,7 +93,7 @@ exports.detail = function (req, res, next) {
             if (!topic) {
                 ep.unbind();
                 return res.renderErr({
-                    message: '主题详情'
+                    message: '话题不存在'
                 });
             }
             if (topic.deleted) {

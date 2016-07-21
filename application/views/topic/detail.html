@@ -3,7 +3,7 @@
 
 
         <div class="panel">
-            <div class="detail">
+            <div class="topic">
                 <div class="hd">
                     <div class="info">
                         <h1 class="title"><%= topic.title %></h1>
@@ -23,6 +23,9 @@
                         <img src="https://cdn.v2ex.co/avatar/1984/54f4/171138_normal.png">
                     </div>
                 </div>
+                <% if(topic.locked){ %>
+                <div class="warn">该主题已被锁定，停止被讨论。</div>
+                <% } %>
                 <div class="bd">
                     <div class="content">
                         <%- topic.content %>
@@ -36,7 +39,10 @@
                         </span>
                     </div>
                 </div>
-            </div>
+            </div><!--/.topic-->
+            <div class="comment">
+
+            </div><!--/.comment-->
         </div>
     </div>
 </div>
