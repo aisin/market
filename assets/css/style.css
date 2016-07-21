@@ -73,6 +73,10 @@ blockquote {
     margin: 1em 3em 1em 2em;
 }
 
+s{
+    text-decoration: none;
+}
+
 button,
 input,
 select,
@@ -550,6 +554,9 @@ article:last-child .item{
     padding: 2px 8px;
     cursor: pointer;
     color: #888;
+}
+.detail .bd .operation .one.did{
+    color: #02b875;
 }
 
 /* Error Page*/

@@ -5,7 +5,7 @@
 function Message (msg) {
     layer.msg(msg, {
         offset: 10,
-        shift: 6
+        shift: 5
     });
 }
 

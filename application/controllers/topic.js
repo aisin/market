@@ -69,21 +69,17 @@ exports.detail = function (req, res, next) {
 
     var me = req.user && req.user._id,
         id = req.params.id;
-    ep = new Eventproxy();
 
+    var ep = new Eventproxy();
     var events = ['topic'];
     ep.fail(next);
 
     ep.all(events, function (topic) {
         res.render('topic/detail', {
+            user: req.user,
             topic: topic
         });
     });
-
-    console.log(me);
-
-    // res.render('topic/detail');
-
 
     Topic.findOne({ _id: id /*, deleted: false*/ })
         .populate([{
@@ -106,9 +102,9 @@ exports.detail = function (req, res, next) {
                     message: '话题已经被删除'
                 });
             }
-            // topic.views += 1;
-            // topic.save();
-            // topic.thanked = thread.thanks.indexOf(me) > -1 ? true : false
+            topic.views += 1;
+            topic.save();
+            topic.liked = topic.like.indexOf(me) > -1 ? true : false
             ep.emit('topic', topic);
         });
 }
@@ -122,7 +118,28 @@ exports.like = function (req, res, next) {
     var me = req.user && req.user._id,
         id = req.body.id;
 
-    Topic.update({ _id: id }, { $push: { like: me } }).exec(function () {
-        res.json({ success: true, message: '喜欢成功' });
+    var ep = new Eventproxy();
+    ep.fail(next);
+
+    ep.on('like', function (ret) {
+        Topic.update({ _id: id }, ret.run).exec(function () {
+            res.json({ success: true, like: ret.like, message: '操作成功' });
+        });
+    });
+
+    Topic.findOne({ _id: id }, function (err, topic) {
+        if (err) return next(err);
+
+        if (topic.like.indexOf(me) > -1) {
+            ep.emit('like', {
+                run: { $pull: { like: me } },
+                like: false
+            });
+        } else {
+            ep.emit('like', {
+                run: { $push: { like: me } },
+                like: true
+            });
+        }
     });
 }

@@ -15,8 +15,6 @@ $(function () {
         var content = $.trim($('#content').val());
         var category = $('#category').val();
 
-        // if(!title) return Message('title!!!!!');
-
         if (!title) {
             Message('请输入标题');
             return false;
@@ -36,7 +34,9 @@ $(function () {
 
     $('.J_TopicLike').on('click', function () {
         var self = $(this),
-            $id = self.data('id');
+            $id = self.data('id'),
+            s = self.find('s'),
+            num = parseInt(s.text());
 
         if (!self.hasClass('disabled')) {
             self.addClass('disabled');
@@ -49,11 +49,17 @@ $(function () {
                     _csrf: G._csrf
                 },
                 success: function (data) {
-                    console.log(data);
-                    if(data.success){
-                        
+                    if (data.success) {
+                        if (data.like) {
+                            s.text(++num);
+                            self.addClass('did');
+                        } else {
+                            s.text(--num);
+                            self.removeClass('did');
+                        }
+                    } else {
+                        Message(data.message);
                     }
-                    Message(data.message);
                     self.removeClass('disabled');
                 }
             });

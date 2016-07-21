@@ -28,11 +28,11 @@
                         <%- topic.content %>
                     </div>
                     <div class="operation">
-                        <span class="up one J_TopicLike" data-id="<%= topic._id %>">
-                            <i class="icon icon-praise"></i> <%= topic.like.length %>
+                        <span class="up one <% if(topic.liked){ %>did<% } %> J_TopicLike" data-id="<%= topic._id %>">
+                            <i class="icon icon-praise"></i>&nbsp;<s><%= topic.like.length %></s>
                         </span>
                         <span class="cmts one">
-                            <i class="icon icon-comment"></i> 8
+                            <i class="icon icon-comment"></i>&nbsp;<s>8</s>
                         </span>
                     </div>
                 </div>
