@@ -60,7 +60,7 @@ app.use(require(config.path.msgMiddleware).msg);
 
 // CSRF 生成
 
-app.all('/*', function (req, res, next) {
+app.all('*', function (req, res, next) {
     res.locals._csrf = req.session ? req.csrfToken() : "";
     next();
 });

@@ -9,13 +9,7 @@ var commentLib = require('../libs/comment');
  */
 
 exports.index = function (req, res, next) {
-    // res.render('home/index', {
-    //     title: '首页',
-    //     user: req.user,
-    //     message: req.flash('homeMsg')
-    // });
 
-    //
     Topic.find({ deleted: false })
         .populate([{
             path: 'category',
@@ -39,7 +33,7 @@ exports.index = function (req, res, next) {
                     user: req.user,
                     topics: topics,
                     categories: categories
-                })
+                });
             });
 
             ep.after('comment', topics.length, function(){

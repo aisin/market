@@ -67,6 +67,40 @@ $(function () {
     });
 
     /**
+     * Topic Collect
+     */
+
+    $('.J_TopicCollect').on('click', function(){
+        var self = $(this),
+            $id = self.data('id');
+
+        if (!self.hasClass('disabled')) {
+            self.addClass('disabled');
+            $.ajax({
+                url: '/t/collect',
+                dataType: 'json',
+                type: 'post',
+                data: {
+                    id: $id,
+                    _csrf: G._csrf
+                },
+                success: function (data) {
+                    if (data.success) {
+                        if (data.collect) {
+                            self.addClass('did');
+                        } else {
+                            self.removeClass('did');
+                        }
+                    } else {
+                        Message(data.message);
+                    }
+                    self.removeClass('disabled');
+                }
+            });
+        }
+    });
+
+    /**
      * Comment Like
      */
 

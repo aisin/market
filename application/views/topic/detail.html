@@ -30,13 +30,20 @@
                     <div id="content" class="content">
                         <%- topic.content %>
                     </div>
-                    <div class="operation">
-                        <span class="up one <% if(topic.liked){ %>did<% } %> J_TopicLike" data-id="<%= topic._id %>">
-                            <i class="icon icon-praise"></i>&nbsp;<s><%= topic.like.length %></s>
-                        </span>
-                        <span class="cmts one">
-                            <i class="icon icon-comment"></i>&nbsp;<s><%= comments.length %></s>
-                        </span>
+                    <div class="operation clearfix">
+                        <div class="fl">
+                            <span class="up one <% if(topic.liked){ %>did<% } %> J_TopicLike" data-id="<%= topic._id %>">
+                                <i class="icon icon-praise"></i>&nbsp;<s><%= topic.like.length %></s>
+                            </span>
+                            <span class="collect one <% if(collect){ %>did<% } %> J_TopicCollect" data-id="<%= topic._id %>">
+                                <i class="icon icon-heart"></i>
+                            </span>
+                        </div>
+                        <div class="fr">
+                            <span id="#commentDo" class="cmts one">
+                                <i class="icon icon-comment"></i>&nbsp;<s><%= comments.length %></s>
+                            </span>
+                        </div>
                     </div>
                 </div>
             </div><!--/.topic-->

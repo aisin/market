@@ -13,5 +13,7 @@ router.get('/t/:id', topic.detail);
 
 router.post('/t/like', auth.userRequired, topic.like);
 
+router.post('/t/collect', auth.userRequired, topic.collect)
+
 
 module.exports = router;

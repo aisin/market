@@ -2,6 +2,7 @@ var Eventproxy = require('eventproxy');
 var _ = require('lodash');
 var Topic = require('../models/topic');
 var Comment = require('../models/comment');
+var Collect = require('../models/collect');
 var categoryLib = require('../libs/category');
 var commentLib = require('../libs/comment');
 
@@ -73,14 +74,15 @@ exports.detail = function (req, res, next) {
         id = req.params.id;
 
     var ep = new Eventproxy();
-    var events = ['topic', 'comments'];
+    var events = ['topic', 'collect', 'comments'];
     ep.fail(next);
 
-    ep.all(events, function (topic, comments) {
+    ep.all(events, function (topic, collect, comments) {
         res.render('topic/detail', {
             user: req.user,
             title: topic.title,
             topic: topic,
+            collect: collect,
             comments: comments,
             message: req.flash('commentAddMsg')
         });
@@ -112,6 +114,12 @@ exports.detail = function (req, res, next) {
             topic.liked = topic.like.indexOf(me) > -1 ? true : false
             ep.emit('topic', topic);
         });
+
+    // 是否收藏
+
+    Collect.findOne({ user: me, topic: id }, function(err, topic){
+        topic ? ep.emit('collect', true) : ep.emit('collect', false);
+    });
 
     // 获取评论
 
@@ -145,7 +153,7 @@ exports.like = function (req, res, next) {
 
     ep.on('like', function (ret) {
         Topic.update({ _id: id }, ret.run).exec(function () {
-            res.json({ success: true, like: ret.like, message: '操作成功' });
+            return res.json({ success: true, like: ret.like, message: '操作成功' });
         });
     });
 
@@ -164,4 +172,40 @@ exports.like = function (req, res, next) {
             });
         }
     });
+}
+
+/**
+ * 话题收藏
+ */
+
+exports.collect = function(req, res,next){
+
+    var me = req.user && req.user._id,
+        id = req.body.id;
+
+    var _collect = {
+        user: me,
+        topic: id
+    };
+
+    var ep = new Eventproxy();
+    ep.fail(next);
+
+    ep.on('collect', function(){
+        new Collect(_collect).save(function(err, ret){
+            return res.json({ success: true, collect: true, message: '操作成功' });
+        });
+    });
+
+    ep.on('unCollect', function(){
+        Collect.remove(_collect, function(err){
+            if(err) return next(err);
+            return res.json({ success: true, collect: false, message: '操作成功' });
+        });
+    });
+
+    Collect.findOne({ user: me, topic: id })
+        .exec(function(err, topic){
+            topic ? ep.emit('unCollect') : ep.emit('collect');
+        });
 }
