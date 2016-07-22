@@ -44,3 +44,12 @@ function Message (msg) {
 
 
 } (jQuery));
+
+/**
+ * 登录提示
+ */
+
+$('.J_LoginTips').on('click',  function(){
+    Message('请登录后再操作');
+    return false;
+});

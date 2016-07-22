@@ -115,10 +115,18 @@ exports.detail = function (req, res, next) {
 
     // 获取评论
 
-
-
     commentLib.getCommentsByTopic(id, function (err, comments) {
-        ep.emit('comments', comments);
+
+        var proxy = new Eventproxy();
+
+        proxy.after('commentList', comments.length, function () {
+            ep.emit('comments', comments);
+        });
+
+        comments.forEach(function (comment, index) {
+            comment.liked = comment.like.indexOf(me) > -1 ? true : false;
+            proxy.emit('commentList');
+        });
     });
 
 }

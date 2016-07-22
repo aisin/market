@@ -14,10 +14,7 @@ var commentSchema = new Schema({
 
     content: String,
 
-    like: {
-        type: Number,
-        default: 0
-    },
+    like: [Schema.Types.ObjectId],
     
     create_at: {
         type: Date,

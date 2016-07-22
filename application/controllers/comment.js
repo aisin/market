@@ -41,7 +41,7 @@ exports.add = function (req, res, next) {
 
     ep.on('err', function (msg) {
         req.flash('commentAddMsg', msg);
-        res.redirect('/t/' + topic_id +'#commentDo');
+        res.redirect('/t/' + topic_id + '#commentDo');
     });
 
     if (!content) {
@@ -50,5 +50,40 @@ exports.add = function (req, res, next) {
 
     new Comment(_comment).save(function (err, ret) {
         res.redirect('/t/' + topic_id);
+    });
+}
+
+/**
+ * 评论点赞
+ */
+
+exports.like = function (req, res, next) {
+
+    var me = req.user && req.user._id,
+        id = req.body.id;
+
+    var ep = new Eventproxy();
+    ep.fail(next);
+
+    ep.on('like', function (ret) {
+        Comment.update({ _id: id }, ret.run).exec(function () {
+            res.json({ success: true, like: ret.like, message: '操作成功' });
+        });
+    });
+
+    Comment.findOne({ _id: id }, function (err, comment) {
+        if (err) return next(err);
+
+        if (comment.like.indexOf(me) > -1) {
+            ep.emit('like', {
+                run: { $pull: { like: me } },
+                like: false
+            });
+        } else {
+            ep.emit('like', {
+                run: { $push: { like: me } },
+                like: true
+            });
+        }
     });
 }

@@ -40,3 +40,5 @@ jspm_packages
 
 # Local Config
 config.js
+
+.DS_Store

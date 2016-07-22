@@ -7,5 +7,8 @@ var auth = require('../middlewares/auth');
 
 router.post('/t/comment/:id', auth.userRequired, comment.add);
 
+// ajax
+
+router.post('/comment/like', auth.userRequired, comment.like);
 
 module.exports = router;

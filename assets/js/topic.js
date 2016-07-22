@@ -65,4 +65,44 @@ $(function () {
             });
         }
     });
+
+    /**
+     * Comment Like
+     */
+
+    $(document).on('click', '.J_CommentLike', function () {
+        var self = $(this);
+        $id = self.data('id'),
+        s = self.find('s'),
+        num = parseInt(s.text());
+
+        console.log($id);
+
+        if (!self.hasClass('disabled')) {
+            self.addClass('disabled');
+            $.ajax({
+                url: '/comment/like',
+                dataType: 'json',
+                type: 'post',
+                data: {
+                    id: $id,
+                    _csrf: G._csrf
+                },
+                success: function (data) {
+                    if (data.success) {
+                        if (data.like) {
+                            s.text(++num);
+                            self.addClass('did');
+                        } else {
+                            s.text(--num);
+                            self.removeClass('did');
+                        }
+                    } else {
+                        Message(data.message);
+                    }
+                    self.removeClass('disabled');
+                }
+            });
+        }
+    });
 });

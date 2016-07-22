@@ -3,22 +3,24 @@
         <div class="panel">
             <div class="topic">
                 <div class="hd">
-                    <div class="info">
-                        <h1 class="title"><%= topic.title %></h1>
-                        <div class="meta">
-                            <span class="node">
-                                <a href="/cat/<%= topic.category._id %>"><%= topic.category.name %></a>
-                            </span>
-                            <span class="dot"></span>
-                            <%= topic.author.username %>
-                            <span class="dot"></span>
-                            <%= moment(topic.create_at).fromNow() %>
-                            <span class="dot"></span>
-                            <%= topic.views %> 次浏览
+                    <div class="inner">
+                        <a class="avatar" href="/u/<%= topic.author.username %>">
+                            <img src="https://cdn.v2ex.co/avatar/1984/54f4/171138_normal.png">
+                        </a>
+                        <div class="info">
+                            <h1 class="title"><%= topic.title %></h1>
+                            <div class="meta">
+                                <span class="node">
+                                    <a href="/cat/<%= topic.category._id %>"><%= topic.category.name %></a>
+                                </span>
+                                <span class="dot"></span>
+                                <%= topic.author.username %>
+                                <span class="dot"></span>
+                                <%= moment(topic.create_at).fromNow() %>
+                                <span class="dot"></span>
+                                <%= topic.views %> 次浏览
+                            </div>
                         </div>
-                    </div>
-                    <div class="avatar">
-                        <img src="https://cdn.v2ex.co/avatar/1984/54f4/171138_normal.png">
                     </div>
                 </div>
                 <% if(topic.locked){ %>
@@ -43,28 +45,42 @@
                 <div class="list">
                     <% for(var i=0; i<comments.length; i++){ %>
                     <div class="comment-item">
-                        <div class="avatar">
-                            <img src="https://cdn.v2ex.co/avatar/1984/54f4/171138_normal.png">
-                        </div>
-                        <div class="con">
-                            <div class="meta">
-                                <span class="index">#<%= i+1 %></span>
-                                <a href="/u/<%= comments[i].author._id %>"><%= comments[i].author.username %></a>&nbsp;&nbsp;
-                                <span><%= moment(comments[i].create_at).fromNow() %></span>
+                        <div class="inner">
+                            <a class="avatar">
+                                <img src="https://cdn.v2ex.co/avatar/1984/54f4/171138_normal.png">
+                            </a>
+                            <div class="con">
+                                <div class="meta">
+                                    <div class="handler">
+                                        <span class="reply">
+                                            <i class="icon icon-reply"></i>
+                                        </span>
+                                        <span class="up J_CommentLike <% if(comments[i].liked){ %>did<% } %>" data-id="<%= comments[i]._id %>">
+                                            <i class="icon icon-praise"></i>&nbsp;<s><%= comments[i].like.length %></s>
+                                        </span>
+                                        <span class="idx">#<%= i+1 %></span>
+                                    </div>
+                                    
+                                    <a href="/u/<%= comments[i].author._id %>"><%= comments[i].author.username %></a>&nbsp;&nbsp;
+                                    <span><%= moment(comments[i].create_at).fromNow() %></span>
+                                </div>
+                                <div class="text"><%= comments[i].content %></div>
                             </div>
-                            <div class="text"><%= comments[i].content %></div>
                         </div>
                     </div>
                     <% } %>
 
-                    <% if (typeof user !== 'undefined') { %>
                     <div id="commentDo" class="comment-do">
                         <% if (message.length > 0) { %>
                         <div class="warn mb15"><%- message %></div>
                         <% } %>
                         <form action="/t/comment/<%= topic._id %>" method="post">
-                            <div class="form-item">
-                                <textarea name="content" class="fill" rows="2"></textarea>
+                            <div class="form-item <% if (typeof user === 'undefined') { %>J_LoginTips<% } %>">
+                                <% if (typeof user !== 'undefined') { %>
+                                <textarea name="content" class="fill" rows="4" placeholder="你想说点什么吗？"></textarea>
+                                <% } else { %>
+                                <textarea name="content" class="fill" rows="4" placeholder="你想说点什么吗？" disabled></textarea>
+                                <% } %>
                             </div>
                             <input type="hidden" name="_csrf" value="<%= _csrf %>">
                             <div class="form-item">
@@ -72,7 +88,6 @@
                             </div>
                         </form>
                     </div>
-                    <% } %>
                 </div>
             </div>
             <!--/.comment-->

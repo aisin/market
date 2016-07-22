@@ -9,6 +9,8 @@ router.post('/t/new', auth.userRequired, topic.doNewTopic);
 
 router.get('/t/:id', topic.detail);
 
+// ajax
+
 router.post('/t/like', auth.userRequired, topic.like);
 
 
