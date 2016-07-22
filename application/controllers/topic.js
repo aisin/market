@@ -1,7 +1,9 @@
 var Eventproxy = require('eventproxy');
 var _ = require('lodash');
 var Topic = require('../models/topic');
+var Comment = require('../models/comment');
 var categoryLib = require('../libs/category');
+var commentLib = require('../libs/comment');
 
 /**
  * 发布主题
@@ -13,8 +15,8 @@ exports.newTopic = function (req, res, next) {
         if (err) return next(err);
 
         res.render('topic/new', {
-            title: '发布话题',
             user: req.user,
+            title: '发布话题',
             categories: categories,
             message: req.flash('newTopicMsg')
         });
@@ -71,13 +73,16 @@ exports.detail = function (req, res, next) {
         id = req.params.id;
 
     var ep = new Eventproxy();
-    var events = ['topic'];
+    var events = ['topic', 'comments'];
     ep.fail(next);
 
-    ep.all(events, function (topic) {
+    ep.all(events, function (topic, comments) {
         res.render('topic/detail', {
             user: req.user,
-            topic: topic
+            title: topic.title,
+            topic: topic,
+            comments: comments,
+            message: req.flash('commentAddMsg')
         });
     });
 
@@ -107,6 +112,15 @@ exports.detail = function (req, res, next) {
             topic.liked = topic.like.indexOf(me) > -1 ? true : false
             ep.emit('topic', topic);
         });
+
+    // 获取评论
+
+
+
+    commentLib.getCommentsByTopic(id, function (err, comments) {
+        ep.emit('comments', comments);
+    });
+
 }
 
 /**

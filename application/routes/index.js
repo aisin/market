@@ -4,6 +4,7 @@ module.exports = function (app) {
     app.use(require('./home'));
     app.use(require('./topic'));
     app.use(require('./admin'));
+    app.use(require('./comment'));
 
 
     app.use(require('./404'));

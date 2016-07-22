@@ -11,4 +11,5 @@ router.get('/t/:id', topic.detail);
 
 router.post('/t/like', auth.userRequired, topic.like);
 
+
 module.exports = router;

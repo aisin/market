@@ -1,7 +1,5 @@
 <div class="container">
     <div class="main">
-
-
         <div class="panel">
             <div class="topic">
                 <div class="hd">
@@ -27,7 +25,7 @@
                 <div class="warn">该主题已被锁定，停止被讨论。</div>
                 <% } %>
                 <div class="bd">
-                    <div class="content">
+                    <div id="content" class="content">
                         <%- topic.content %>
                     </div>
                     <div class="operation">
@@ -35,14 +33,49 @@
                             <i class="icon icon-praise"></i>&nbsp;<s><%= topic.like.length %></s>
                         </span>
                         <span class="cmts one">
-                            <i class="icon icon-comment"></i>&nbsp;<s>8</s>
+                            <i class="icon icon-comment"></i>&nbsp;<s><%= comments.length %></s>
                         </span>
                     </div>
                 </div>
             </div><!--/.topic-->
-            <div class="comment">
+            
+            <div id="comment" class="comment">
+                <div class="list">
+                    <% for(var i=0; i<comments.length; i++){ %>
+                    <div class="comment-item">
+                        <div class="avatar">
+                            <img src="https://cdn.v2ex.co/avatar/1984/54f4/171138_normal.png">
+                        </div>
+                        <div class="con">
+                            <div class="meta">
+                                <span class="index">#<%= i+1 %></span>
+                                <a href="/u/<%= comments[i].author._id %>"><%= comments[i].author.username %></a>&nbsp;&nbsp;
+                                <span><%= moment(comments[i].create_at).fromNow() %></span>
+                            </div>
+                            <div class="text"><%= comments[i].content %></div>
+                        </div>
+                    </div>
+                    <% } %>
 
-            </div><!--/.comment-->
+                    <% if (typeof user !== 'undefined') { %>
+                    <div id="commentDo" class="comment-do">
+                        <% if (message.length > 0) { %>
+                        <div class="warn mb15"><%- message %></div>
+                        <% } %>
+                        <form action="/t/comment/<%= topic._id %>" method="post">
+                            <div class="form-item">
+                                <textarea name="content" class="fill" rows="2"></textarea>
+                            </div>
+                            <input type="hidden" name="_csrf" value="<%= _csrf %>">
+                            <div class="form-item">
+                                <button class="btn" type="submit">提交</button>
+                            </div>
+                        </form>
+                    </div>
+                    <% } %>
+                </div>
+            </div>
+            <!--/.comment-->
         </div>
     </div>
 </div>

@@ -1,6 +1,7 @@
 var Eventproxy = require('eventproxy');
 var Topic = require('../models/topic');
 var categoryLib = require('../libs/category');
+var commentLib = require('../libs/comment');
 
 
 /**
@@ -26,7 +27,7 @@ exports.index = function (req, res, next) {
                 path: 'last_reply',
                 select: 'username'
             }])
-        .sort({ update_at: -1 })
+        .sort({ create_at: -1 })
         .exec(function (err, topics) {
             var ep = new Eventproxy();
             ep.fail(next);
@@ -41,13 +42,25 @@ exports.index = function (req, res, next) {
                 })
             });
 
-            ep.emit('topics', topics);
+            ep.after('comment', topics.length, function(){
+                ep.emit('topics', topics);
+            });
+
+            // 获取每条话题的评论数
+
+            topics.forEach(function(topic, index) {
+                commentLib.getCountByTopic(topic._id, ep.done(function(count){
+                    topic.comments = count;
+                    ep.emit('comment');
+                }));
+            });
 
             // 获取分类
 
             categoryLib.getAllCategories(function (err, categories) {
                 ep.emit('category', categories);
-            })
+            });
+            
         });
 
 };

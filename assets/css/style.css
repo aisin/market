@@ -260,6 +260,12 @@ p {
     margin: 0 0 10px;
 }
 
+/****/
+
+.mb15{
+    margin-bottom: 15px;
+}
+
 .container {
     margin-right: auto;
     margin-left: auto;
@@ -380,7 +386,7 @@ p {
     padding: 15px 0;
 }
 .panel{
-    padding: 0 15px;
+    padding: 0;
 }
 .box{
     background: #fff;
@@ -402,7 +408,8 @@ article:last-child .item{
 }
 
 .item .inner{
-    padding: 0 0 0 58px;
+    /*padding: 0 0 0 58px;*/
+    display: flex;
 }
 
 .item .inner a{
@@ -410,14 +417,16 @@ article:last-child .item{
 }
 
 .item .author{
-    float: left;
-    margin-left: -58px;
-    margin-top: 12px;
+    /*float: left;*/
+    /*margin-left: -58px;*/
+    margin-top: 11px;
     font-size: 0;
+    margin-right: 11px;
 }
 
 .item .all{
     padding: 12px 0;
+    flex: 1;
 }
 
 .item .all h2{
@@ -425,6 +434,7 @@ article:last-child .item{
     font-weight: normal;
     margin-bottom: 8px;
     word-wrap: break-word;
+    line-height: 1.6em;
 }
 
 .item .all h2 a:hover{
@@ -516,7 +526,7 @@ article:last-child .item{
 /* Topic Detail */
 .topic .hd{
     display: flex;
-    border-bottom: 1px solid #efefef;
+    border-bottom: 1px solid #f2f2f2;
 }
 .topic .hd .info{
     flex: 1;
@@ -532,36 +542,36 @@ article:last-child .item{
 }
 .topic .hd .avatar{
     font-size: 0;
+    margin-left: 10px;
 }
 .topic .hd .avatar img{
     width: 48px;
     height: 48px;
     border-radius: 4px;
 }
-.topic .warn{
-    background: #f7efef;
-    padding: 6px 10px;
-    font-size: 12px;
-    color: #f12323;
-    border-left: 2px solid #ef5959;
-}
-.topic .bd .content{
+
+#content{
     padding: 15px 0;
     line-height: 1.8em;
-    border-bottom: 1px solid #efefef;
+    /*border-bottom: 1px solid #f2f2f2;*/
 }
-.topic .bd .content p:last-child{
+#content p:last-child{
     margin-bottom: 0;
 }
-.topic .bd .content ul{
+#content ul{
     padding: 0 0 0 15px;
     
 }
-.topic .bd .content li{
+#content li{
     list-style: initial;
+}
+#content img{
+    max-width: 100%;
 }
 .topic .bd .operation{
     padding: 10px 0;
+    background-color: #f8f8f8;
+    margin: 20px 0;
 }
 .topic .bd .operation .one{
     display: inline-block;
@@ -573,9 +583,39 @@ article:last-child .item{
     color: #02b875;
 }
 
+/* Comments */
 .comment{
-    padding: 20px 0;
-    background: #fafafa;
+    padding: 0 0 20px;
+    /*background: #fafafa;*/
+}
+.comment .comment-item{
+    display: flex;
+    padding: 15px 0;
+    border-bottom: 1px solid #eaeaea;
+}
+.comment .comment-item .avatar{
+    margin-right: 12px;
+    font-size: 0;
+}
+.comment .comment-item .avatar img{
+    width: 48px;
+    height: 48px;
+    border-radius: 4px;
+}
+.comment .comment-item .con{
+    flex: 1;
+}
+.comment .comment-item .meta{
+    margin-bottom: 4px;
+}
+.comment .comment-item .meta .index{
+    float: right;
+    background: #f2f2f2;
+    padding: 0px 8px;
+    border-radius: 10px;
+}
+.comment .comment-do{
+    margin-top: 15px;
 }
 
 /* Error Page*/
@@ -615,6 +655,7 @@ article:last-child .item{
 }
 .form-item textarea.fill{
     height: auto;
+    resize: none;
 }
 .form-item .fill:focus{
     border: 1px solid #02b875;
@@ -668,17 +709,15 @@ article:last-child .item{
     box-shadow: inset 0px 2px 3px 0px #048c5a;
 }
 
-.fast-msg{
-    padding: 6px 15px;
-    background-color: #f37878;
-    color: #fff;
-}
-
-.fast-msg p:last-child{
-    margin: 0;
-}
-
 /* Common parts */
+
+.warn{
+    background: #f7efef;
+    padding: 6px 10px;
+    font-size: 12px;
+    color: #f12323;
+    border-left: 2px solid #ef5959;
+}
 
 .menu{
     display: inline-block;
@@ -768,6 +807,9 @@ article:last-child .item{
     .logo{
         margin-left: 15px;
     }
+    .panel{
+        padding: 0 15px;
+    }
 }
 
 @media (max-width: 768px){
@@ -776,7 +818,7 @@ article:last-child .item{
         text-align: center;
         margin-left: 0;
     }
-    .main{
+    .main.home{
         padding: 0 0;
     }
     .show-wide{
