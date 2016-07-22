@@ -1,0 +1,71 @@
+<section id="profile" class="profile clearfix">
+    <div class="container">
+        <div class="avatar">
+            <img src="http://imgs.duwu.me/duwu/avatar/000/00/02/55.jpg">
+        </div>
+        <div class="info">
+            <div class="user-name">
+                <%= user.username %>
+            </div>
+            <div class="join-time"><%= moment(user.create_at).fromNow() %>加入</div>
+            <% if(user.isme){ %>
+            <div class="modify">
+                <a class="btn btn-xs" href="#">修改资料</a>
+            </div>
+            <% } %>
+        </div>
+    </div>
+</section>
+
+<div class="container">
+    <div class="main">
+        <div class="category-tab">
+            <div class="element active">
+                <a href="/profile">我的收藏</a>
+            </div>
+            <div class="element">
+                <a href="/created">我的发布</a>
+            </div>
+        </div>
+
+        <div class="panel">
+            <% if(topics.length === 0){ %>
+                <div class="error"><%= user.isme ? '您' : 'TA ' %>还未收藏任何话题</div>
+            <% } else { %>
+
+                <% for(var i=0; i<topics.length; i++){ %>
+                <article>
+                    <div class="item">
+                    <div class="inner">
+                        <a class="author" href="/u/<%= topics[i].author.username %>">
+                        <img class="avatar" alt="<%= topics[i].author.username %>" src="https://cdn.v2ex.co/avatar/1984/54f4/171138_normal.png?m=1461906290">
+                        </a>
+                        <div class="all">
+                        <h2>
+                            <a href="/t/<%= topics[i]._id %>"><%= topics[i].title %></a>
+                        </h2>
+                        <div class="meta">
+                            <span class="node">
+                            <a href="/cat/<%= topics[i].category._id %>"><%= topics[i].category.name %></a>
+                            </span>
+                            <span class="dot"></span>
+                            <span class="last-reply">
+                            <%= moment(topics[i].create_at).fromNow() %>
+                            </span>
+                            <span class="dot"></span>
+                            <span class="up">
+                                <i class="icon icon-praise"></i>&nbsp;<s><%= topics[i].like.length %></s>
+                            </span>
+                            <span class="cmts">
+                                <i class="icon icon-comment"></i>&nbsp;<s><%= topics[i].commentsCount %></s>
+                            </span>
+                        </div>
+                        </div>
+                    </div>
+                    </div>
+                </article>
+                <% } %>
+            <% } %>
+        </div>
+    </div>
+</div>

@@ -16,7 +16,7 @@ exports.newTopic = function (req, res, next) {
         if (err) return next(err);
 
         res.render('topic/new', {
-            user: req.user,
+            me: req.user,
             title: '发布话题',
             categories: categories,
             message: req.flash('newTopicMsg')
@@ -79,7 +79,7 @@ exports.detail = function (req, res, next) {
 
     ep.all(events, function (topic, collect, comments) {
         res.render('topic/detail', {
-            user: req.user,
+            me: req.user,
             title: topic.title,
             topic: topic,
             collect: collect,

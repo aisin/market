@@ -24,8 +24,8 @@
             <article>
                 <div class="item">
                 <div class="inner">
-                    <a class="author" href="/u/<%= topics[i].author._id %>">
-                    <img class="avatar" alt="<%= topics[i].author.username %>" src="https://cdn.v2ex.co/avatar/1984/54f4/171138_normal.png?m=1461906290">
+                    <a class="author" href="/u/<%= topics[i].author.username %>">
+                        <img class="avatar" alt="<%= topics[i].author.username %>" src="https://cdn.v2ex.co/avatar/1984/54f4/171138_normal.png?m=1461906290">
                     </a>
                     <div class="all">
                     <h2>
@@ -33,11 +33,11 @@
                     </h2>
                     <div class="meta">
                         <span class="node">
-                        <a href="/cat/<%= topics[i].category._id %>"><%= topics[i].category.name %></a>
+                            <a href="/cat/<%= topics[i].category._id %>"><%= topics[i].category.name %></a>
                         </span>
                         <span class="dot"></span>
                         <span class="last-reply">
-                        <%= moment(topics[i].create_at).fromNow() %>
+                            <%= moment(topics[i].create_at).fromNow() %>
                         </span>
                         <span class="dot"></span>
                         <span class="up">

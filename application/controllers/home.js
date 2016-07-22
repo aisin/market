@@ -30,7 +30,7 @@ exports.index = function (req, res, next) {
             ep.all(events, function (topics, categories) {
                 res.render('home/index', {
                     title: '首页',
-                    user: req.user,
+                    me: req.user,
                     topics: topics,
                     categories: categories
                 });

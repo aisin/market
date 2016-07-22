@@ -4,6 +4,7 @@ var validator = require('validator');
 var User = require('../models/user');
 var Collect = require('../models/collect');
 var commentLib = require('../libs/comment');
+var userLib = require('../libs/user');
 var utils = require('../common/utils');
 
 
@@ -14,7 +15,7 @@ var utils = require('../common/utils');
 exports.signup = function (req, res, next) {
     res.render('user/signup', {
         title: '注册',
-        user: req.user,
+        me: req.user,
         message: req.flash('signupMsg')
     });
 };
@@ -61,10 +62,9 @@ exports.doSignup = function (req, res, next) {
  */
 
 exports.login = function (req, res, next) {
-    console.log('req.user: ', req.user);
     res.render('user/login', {
         title: '登录',
-        user: req.user,
+        me: req.user,
         message: req.flash('loginMsg')
     });
 }
@@ -96,27 +96,38 @@ exports.doLogin = function (req, res, next) {
 }
 
 /**
- * 个人中心页面
+ * 用户页面
  */
 
-exports.profile = function (req, res, next) {
+exports.user = function (req, res, next) {
 
-    var me = req.user && req.user._id;
+    var me = req.user && req.user._id,
+        username = req.params.username;
 
     var ep = new Eventproxy();
     ep.fail(next);
 
-    ep.on('topics', function(topics){
-        res.render('user/profile', {
+    var events = ['user', 'topics'];
+    ep.all(events, function (user, topics) {
+        res.render('user/user', {
             title: '个人中心',
-            user: req.user,
+            me: req.user,
+            user: user,
             topics: topics
         });
     });
 
+    // 判断是否是自己的页面
+
+    userLib.getUserByusername(username, function (err, user) {
+        user.isme = user._id.equals(me);
+        ep.emit('getCollect', user._id);
+        ep.emit('user', user);
+    });
+
     // 获取每一条话题的评论数
 
-    ep.on('getCounts', function(topics){
+    ep.on('getCounts', function (topics) {
 
         var proxy = new Eventproxy();
 
@@ -124,8 +135,8 @@ exports.profile = function (req, res, next) {
             ep.emit('topics', topics);
         });
 
-        topics.forEach(function(topic, index){
-            commentLib.getCountByTopic(topic._id, function(err, count){
+        topics.forEach(function (topic, index) {
+            commentLib.getCountByTopic(topic._id, function (err, count) {
                 topic.commentsCount = count;
                 proxy.emit('counts');
             });
@@ -134,22 +145,27 @@ exports.profile = function (req, res, next) {
 
     // 获取收藏主题列表
 
-    Collect.find({ user: me })
-        .populate([{
-            path: 'topic',
-            populate: {
-                path: 'category',
-                select: 'name'
-            }
-        }])
-        .sort({create_at: -1})
-        .exec(function(err, collects){
-            var topics = collects.map(function(collect){
-                return collect.topic;
+    ep.on('getCollect', function (userId) {
+        Collect.find({ user: userId })
+            .populate([{
+                path: 'topic',
+                populate: [{
+                    path: 'category',
+                    select: 'name'
+                }, {
+                    path: 'author',
+                    select: 'username'
+                }]
+            }])
+            .sort({ create_at: -1 })
+            .exec(function (err, collects) {
+                var topics = collects.map(function (collect) {
+                    return collect.topic;
+                });
+                ep.emit('getCounts', topics);
             });
+    });
 
-            ep.emit('getCounts', topics);
-        });
 }
 
 /**

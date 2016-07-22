@@ -82,8 +82,8 @@
                         <div class="warn mb15"><%- message %></div>
                         <% } %>
                         <form action="/t/comment/<%= topic._id %>" method="post">
-                            <div class="form-item <% if (typeof user === 'undefined') { %>J_LoginTips<% } %>">
-                                <% if (typeof user !== 'undefined') { %>
+                            <div class="form-item <% if (typeof me === 'undefined') { %>J_LoginTips<% } %>">
+                                <% if (typeof me !== 'undefined') { %>
                                 <textarea name="content" class="fill" rows="4" placeholder="你想说点什么吗？"></textarea>
                                 <% } else { %>
                                 <textarea name="content" class="fill" rows="4" placeholder="你想说点什么吗？" disabled></textarea>
