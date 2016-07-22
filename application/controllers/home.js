@@ -44,7 +44,7 @@ exports.index = function (req, res, next) {
 
             topics.forEach(function(topic, index) {
                 commentLib.getCountByTopic(topic._id, ep.done(function(count){
-                    topic.comments = count;
+                    topic.commentsCount = count;
                     ep.emit('comment');
                 }));
             });

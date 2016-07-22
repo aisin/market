@@ -117,7 +117,7 @@ exports.detail = function (req, res, next) {
 
     // 是否收藏
 
-    Collect.findOne({ user: me, topic: id }, function(err, topic){
+    Collect.findOne({ user: me, topic: id }, function (err, topic) {
         topic ? ep.emit('collect', true) : ep.emit('collect', false);
     });
 
@@ -178,7 +178,7 @@ exports.like = function (req, res, next) {
  * 话题收藏
  */
 
-exports.collect = function(req, res,next){
+exports.collect = function (req, res, next) {
 
     var me = req.user && req.user._id,
         id = req.body.id;
@@ -191,21 +191,21 @@ exports.collect = function(req, res,next){
     var ep = new Eventproxy();
     ep.fail(next);
 
-    ep.on('collect', function(){
-        new Collect(_collect).save(function(err, ret){
+    ep.on('collect', function () {
+        new Collect(_collect).save(function (err, ret) {
             return res.json({ success: true, collect: true, message: '操作成功' });
         });
     });
 
-    ep.on('unCollect', function(){
-        Collect.remove(_collect, function(err){
-            if(err) return next(err);
+    ep.on('unCollect', function () {
+        Collect.remove(_collect, function (err) {
+            if (err) return next(err);
             return res.json({ success: true, collect: false, message: '操作成功' });
         });
     });
 
     Collect.findOne({ user: me, topic: id })
-        .exec(function(err, topic){
+        .exec(function (err, topic) {
             topic ? ep.emit('unCollect') : ep.emit('collect');
         });
 }

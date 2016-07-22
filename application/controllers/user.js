@@ -1,8 +1,11 @@
 var Eventproxy = require('eventproxy');
 var _ = require('lodash');
 var validator = require('validator');
-var utils = require('../common/utils');
 var User = require('../models/user');
+var Collect = require('../models/collect');
+var commentLib = require('../libs/comment');
+var utils = require('../common/utils');
+
 
 /**
  * 注册页面
@@ -27,7 +30,6 @@ exports.doSignup = function (req, res, next) {
         passwordcf = req.body.passwordcf;
 
     var ep = new Eventproxy();
-
     ep.fail(next);
 
     ep.on('err', function (msg) {
@@ -98,13 +100,56 @@ exports.doLogin = function (req, res, next) {
  */
 
 exports.profile = function (req, res, next) {
-    // console.log('req.user : ', req.user);
-    res.render('user/profile', {
-        title: '个人中心',
-        user: req.user
+
+    var me = req.user && req.user._id;
+
+    var ep = new Eventproxy();
+    ep.fail(next);
+
+    ep.on('topics', function(topics){
+        res.render('user/profile', {
+            title: '个人中心',
+            user: req.user,
+            topics: topics
+        });
     });
 
-    
+    // 获取每一条话题的评论数
+
+    ep.on('getCounts', function(topics){
+
+        var proxy = new Eventproxy();
+
+        proxy.after('counts', topics.length, function () {
+            ep.emit('topics', topics);
+        });
+
+        topics.forEach(function(topic, index){
+            commentLib.getCountByTopic(topic._id, function(err, count){
+                topic.commentsCount = count;
+                proxy.emit('counts');
+            });
+        });
+    });
+
+    // 获取收藏主题列表
+
+    Collect.find({ user: me })
+        .populate([{
+            path: 'topic',
+            populate: {
+                path: 'category',
+                select: 'name'
+            }
+        }])
+        .sort({create_at: -1})
+        .exec(function(err, collects){
+            var topics = collects.map(function(collect){
+                return collect.topic;
+            });
+
+            ep.emit('getCounts', topics);
+        });
 }
 
 /**
