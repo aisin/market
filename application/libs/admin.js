@@ -15,7 +15,7 @@ exports.getCatgoryList = function (callback) {
         });
 
         categories.forEach(function(cate, index){
-            topicLib.getTopicCountByCategory({category: cate._id}, ep.done(function(count){
+            topicLib.getTopicCountByCategoryId(cate._id, ep.done(function(count){
                 cate.count = count;
                 ep.emit('count');
             }))

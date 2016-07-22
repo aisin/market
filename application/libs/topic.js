@@ -13,15 +13,6 @@ exports.getAllTopics = function (callback) {
  * 根据分类 ID 获取话题数量
  */
 
-exports.getTopicCountByCategory = function (query, callback) {
-    Topic.count(query, callback);
-}
-
-/**
- * 根据用户 ID 获取收藏的话题
- */
-
-exports.getCollectTopicsByUser = function (userId, callback) {
-
-    // Topic.find({})
+exports.getTopicCountByCategoryId = function (catId, callback) {
+    Topic.count(catId, callback);
 }

@@ -1,0 +1,18 @@
+<section id="profile" class="profile clearfix">
+    <div class="container">
+        <div class="avatar">
+            <img src="http://imgs.duwu.me/duwu/avatar/000/00/02/55.jpg">
+        </div>
+        <div class="info">
+            <div class="user-name">
+                <%= user.username %>
+            </div>
+            <div class="join-time"><%= moment(user.create_at).fromNow() %>加入</div>
+            <% if(user.isme){ %>
+            <div class="modify">
+                <a class="btn btn-xs" href="#">修改资料</a>
+            </div>
+            <% } %>
+        </div>
+    </div>
+</section>

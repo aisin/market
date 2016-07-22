@@ -3,6 +3,7 @@ var _ = require('lodash');
 var validator = require('validator');
 var User = require('../models/user');
 var Collect = require('../models/collect');
+var Topic = require('../models/topic');
 var commentLib = require('../libs/comment');
 var userLib = require('../libs/user');
 var utils = require('../common/utils');
@@ -166,6 +167,72 @@ exports.user = function (req, res, next) {
             });
     });
 
+}
+
+/**
+ * 用户创建的话题列表
+ */
+
+exports.created = function (req, res, next) {
+
+    var me = req.user && req.user._id,
+        username = req.params.username;
+
+    var ep = new Eventproxy();
+    ep.fail(next);
+
+    var events = ['user', 'topics'];
+    ep.all(events, function (user, topics) {
+        res.render('user/created', {
+            title: '个人中心',
+            me: req.user,
+            user: user,
+            topics: topics
+        });
+    });
+
+    // 判断是否是自己的页面
+
+    userLib.getUserByusername(username, function (err, user) {
+        user.isme = user._id.equals(me);
+        ep.emit('getCreated', user._id);
+        ep.emit('user', user);
+    });
+
+    // 获取每一条话题的评论数
+
+    ep.on('getCounts', function (topics) {
+
+        var proxy = new Eventproxy();
+
+        proxy.after('counts', topics.length, function () {
+            ep.emit('topics', topics);
+        });
+
+        topics.forEach(function (topic, index) {
+            commentLib.getCountByTopic(topic._id, function (err, count) {
+                topic.commentsCount = count;
+                proxy.emit('counts');
+            });
+        });
+    });
+
+    // 获取创建主题列表
+
+    ep.on('getCreated', function (userId) {
+        Topic.find({ author: userId })
+            .populate([{
+                path: 'category',
+                select: 'name'
+            }, {
+                path: 'author',
+                select: 'username'
+            }])
+            .sort({ create_at: -1 })
+            .exec(function (err, topics) {
+                ep.emit('getCounts', topics);
+            });
+    });
 }
 
 /**

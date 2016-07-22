@@ -3,16 +3,16 @@
 <div class="container">
     <div class="main">
         <div class="category-tab">
-            <div class="element active">
+            <div class="element">
                 <a href="/u/<%= user.username %>"><%= user.isme ? '我' : 'TA ' %>的收藏</a>
             </div>
-            <div class="element">
+            <div class="element active">
                 <a href="/u/<%= user.username %>/created"><%= user.isme ? '我' : 'TA ' %>的创建</a>
             </div>
         </div>
         <div class="panel">
             <% if(topics.length === 0){ %>
-                <div class="error"><%= user.isme ? '您' : 'TA ' %>还未收藏任何话题</div>
+                <div class="error"><%= user.isme ? '您' : 'TA ' %>还未创建任何话题</div>
             <% } else { %>
 
                 <% for(var i=0; i<topics.length; i++){ %>

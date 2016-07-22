@@ -27,6 +27,8 @@ module.exports = function(app){
 
     app.get('/u/:username', user.user);
 
+    app.get('/u/:username/created', user.created);
+
     app.get('/logout', user.logout);
     
 };
