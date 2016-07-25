@@ -218,7 +218,7 @@ exports.setting = function (req, res, next) {
     var me = req.user && req.user._id;
 
     userLib.getUserById(me, function(err, user){
-        user.isme = undefined;  // 个人信息页面故意不显示“编辑资料”
+        user.isme = undefined;  // 个人信息页面故意不显示“修改资料”
         res.render('user/setting', {
             me: req.user,
             title: '个人信息',

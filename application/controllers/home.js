@@ -10,7 +10,9 @@ var topicLib = require('../libs/topic');
 
 exports.index = function (req, res, next) {
 
-    var ep = new Eventproxy();
+    var page = req.query.p;
+        ep = new Eventproxy();
+        
     ep.fail(next);
 
     // 渲染任务列表
@@ -27,7 +29,7 @@ exports.index = function (req, res, next) {
 
     // 获取话题列表
 
-    topicLib.getTopicsByQuery({ deleted: false }, function (err, topics) {
+    topicLib.getTopicsByQuery({ deleted: false }, page, function (err, topics) {
         ep.emit('topics', topics);
     });
 

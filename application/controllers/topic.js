@@ -218,6 +218,7 @@ exports.collect = function (req, res, next) {
 exports.category = function (req, res, next) {
 
     var id = req.params.id,
+        page = req.query.p,
         ep = new Eventproxy();
 
     ep.fail(next);
@@ -227,7 +228,7 @@ exports.category = function (req, res, next) {
     ep.all(events, function(topics, category){
         res.render('topic/category', {
             me: req.user,
-            title: '分类页面',
+            title: category.name,
             topics: topics,
             category: category
         });
@@ -235,7 +236,7 @@ exports.category = function (req, res, next) {
 
     // 获取话题列表
 
-    topicLib.getTopicsByQuery({ category: id, deleted: false }, function (err, topics) {
+    topicLib.getTopicsByQuery({ category: id, deleted: false }, page, function (err, topics) {
         ep.emit('topics', topics);
     });
 

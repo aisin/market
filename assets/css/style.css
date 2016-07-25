@@ -226,6 +226,7 @@ body {
     font-size: 14px;
     line-height: 1.5;
     overflow-y: scroll;
+    overflow-x: hidden;
 }
 
 h1,h2,h3,h4,h5,h6 {
@@ -752,6 +753,18 @@ article:last-child .item{
 }
 
 /* Common parts */
+
+.pagination li{
+    display: inline-block;
+}
+.pagination li a{
+    display: block;
+    border: 1px solid #02b875;
+    width: 30px;
+    height: 30px;
+    line-height: 28px;
+    text-align: center;
+}
 
 .warn{
     background: #f7efef;
