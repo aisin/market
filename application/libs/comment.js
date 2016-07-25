@@ -11,7 +11,7 @@ exports.getCommentsByTopic = function(topic_id, callback){
             path: 'author',
             select: 'username'
         }])
-        .sort({ create_at: -1 })
+        .sort({ create_at: 1 })
         .exec(callback);
 
 }

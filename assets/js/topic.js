@@ -70,7 +70,7 @@ $(function () {
      * Topic Collect
      */
 
-    $('.J_TopicCollect').on('click', function(){
+    $('.J_TopicCollect').on('click', function () {
         var self = $(this),
             $id = self.data('id');
 
@@ -107,10 +107,10 @@ $(function () {
     $(document).on('click', '.J_CommentLike', function () {
         var self = $(this);
         $id = self.data('id'),
-        s = self.find('s'),
-        num = parseInt(s.text());
+            s = self.find('s'),
+            num = parseInt(s.text());
 
-        console.log($id);
+        // console.log($id);
 
         if (!self.hasClass('disabled')) {
             self.addClass('disabled');
@@ -137,6 +137,22 @@ $(function () {
                     self.removeClass('disabled');
                 }
             });
+        }
+    });
+
+    /**
+     * Comment reply (@ users)
+     */
+
+    $(document).on('click', '.J_Reply', function () {
+        var self = $(this),
+            name = self.data('user'),
+            content = $.trim($('#comment_content').val());
+
+        if (!content) {
+            $('#comment_content').val(content + '@' + name + ' ').focus();
+        } else {
+            $('#comment_content').val(content + '\r\n@' + name + ' ').focus();
         }
     });
 });

@@ -59,7 +59,7 @@
                             <div class="con">
                                 <div class="meta">
                                     <div class="handler">
-                                        <span class="reply">
+                                        <span class="reply J_Reply" data-user="<%= comments[i].author.username %>">
                                             <i class="icon icon-reply"></i>
                                         </span>
                                         <span class="up J_CommentLike <% if(comments[i].liked){ %>did<% } %>" data-id="<%= comments[i]._id %>">
@@ -71,7 +71,7 @@
                                     <a href="/u/<%= comments[i].author._id %>"><%= comments[i].author.username %></a>&nbsp;&nbsp;
                                     <span><%= moment(comments[i].create_at).fromNow() %></span>
                                 </div>
-                                <div class="text"><%= comments[i].content %></div>
+                                <div class="text"><%- comments[i].content %></div>
                             </div>
                         </div>
                     </div>
@@ -84,9 +84,9 @@
                         <form action="/t/comment/<%= topic._id %>" method="post">
                             <div class="form-item <% if (typeof me === 'undefined') { %>J_LoginTips<% } %>">
                                 <% if (typeof me !== 'undefined') { %>
-                                <textarea name="content" class="fill" rows="4" placeholder="你想说点什么吗？"></textarea>
+                                <textarea id="comment_content" name="content" class="fill" rows="4" placeholder="你想说点什么吗？"></textarea>
                                 <% } else { %>
-                                <textarea name="content" class="fill" rows="4" placeholder="你想说点什么吗？" disabled></textarea>
+                                <textarea id="comment_content" name="content" class="fill" rows="4" placeholder="你想说点什么吗？" disabled></textarea>
                                 <% } %>
                             </div>
                             <input type="hidden" name="_csrf" value="<%= _csrf %>">

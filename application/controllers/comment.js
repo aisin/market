@@ -1,7 +1,11 @@
 var Eventproxy = require('eventproxy');
 var _ = require('lodash');
+var XSS = require('xss');
 var Comment = require('../models/comment');
 var commentLib = require('../libs/comment');
+var atLib = require('../libs/at');
+var config = require('../../config.js');
+var xss = new XSS.FilterXSS(config.xssOptions);
 
 /**
  * 评论列表
@@ -26,14 +30,14 @@ exports.add = function (req, res, next) {
 
     var me = req.user && req.user._id,
         topic_id = req.params.id,
-        content = _.trim(req.body.content);
+        content = xss.process(_.trim(req.body.content)).replace(/\r\n/g, '<br>');
 
-    console.log('topic_id', topic_id)
+    // console.log('topic_id', topic_id)
 
     var _comment = {
         author: me,
         topic: topic_id,
-        content: content
+        content: atLib.linkUsers(content) // at users
     };
 
     var ep = new Eventproxy();
