@@ -472,7 +472,7 @@ article:last-child .item{
 /* Profile */
 .profile{
     padding: 20px 15px;
-    background: #eee;
+    background: #f8f8f8;
 }
 .profile .avatar{
     float: left;
@@ -489,9 +489,10 @@ article:last-child .item{
 .profile .info .user-name{
     font-size: 18px;
     font-weight: bold;
+    margin-bottom: 5px;
 }
 .profile .info .modify{
-    margin: 15px 0 0 0;
+    margin: 10px 0 0 0;
 }
 .category-tab{
     display: -webkit-flex;
@@ -688,6 +689,10 @@ article:last-child .item{
     height: 34px;
     border-radius: 2px;
     line-height: 1.4;
+}
+.form-item .fill:disabled{
+    color: #999;
+    cursor: not-allowed;
 }
 .form-item textarea.fill{
     height: auto;
