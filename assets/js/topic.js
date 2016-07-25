@@ -4,7 +4,7 @@ $(function () {
 
     typeof Simditor !== 'undefined' && new Simditor({
         textarea: $('#content'),
-        placeholder: '文明上网，文明发言',
+        placeholder: '请输入话题的内容',
         defaultImage: 'images/image.png'
     });
 

@@ -40,9 +40,9 @@
                             </span>
                         </div>
                         <div class="fr">
-                            <span id="#commentDo" class="cmts one">
+                            <a class="cmts one" href="#cmt">
                                 <i class="icon icon-comment"></i>&nbsp;<s><%= comments.length %></s>
-                            </span>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -77,7 +77,7 @@
                     </div>
                     <% } %>
 
-                    <div id="commentDo" class="comment-do">
+                    <div id="cmt" class="comment-do">
                         <% if (message.length > 0) { %>
                         <div class="warn mb15"><%- message %></div>
                         <% } %>

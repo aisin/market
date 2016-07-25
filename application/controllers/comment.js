@@ -45,7 +45,7 @@ exports.add = function (req, res, next) {
 
     ep.on('err', function (msg) {
         req.flash('commentAddMsg', msg);
-        res.redirect('/t/' + topic_id + '#commentDo');
+        res.redirect('/t/' + topic_id + '#cmt');
     });
 
     if (!content) {
