@@ -15,5 +15,15 @@ router.get('/admin/category/add', admin.categoryAdd);
 
 router.post('/admin/category/add', admin.doCategoryAdd);
 
+router.get('/admin/topics', admin.topicList);
+
+router.get('/admin/t/:id/delete', admin.topicDelete);
+
+router.get('/admin/t/:id/undelete', admin.topicUndelete);
+
+router.get('/admin/t/:id/locked', admin.topicLocked);
+
+router.get('/admin/t/:id/unlock', admin.topicUnlock);
+
 
 module.exports = router;

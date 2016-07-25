@@ -17,7 +17,7 @@ exports.getAllTopics = function (callback) {
  */
 
 exports.getTopicCountByCategoryId = function (catId, callback) {
-    Topic.count(catId, callback);
+    Topic.count({ category: catId }, callback);
 }
 
 /**
