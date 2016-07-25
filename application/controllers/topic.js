@@ -5,6 +5,7 @@ var Comment = require('../models/comment');
 var Collect = require('../models/collect');
 var categoryLib = require('../libs/category');
 var commentLib = require('../libs/comment');
+var topicLib = require('../libs/topic');
 
 /**
  * 发布主题
@@ -208,4 +209,39 @@ exports.collect = function (req, res, next) {
         .exec(function (err, topic) {
             topic ? ep.emit('unCollect') : ep.emit('collect');
         });
+}
+
+/**
+ * 话题分类列表
+ */
+
+exports.category = function (req, res, next) {
+
+    var id = req.params.id,
+        ep = new Eventproxy();
+
+    ep.fail(next);
+
+    var events = ['topics', 'category'];
+
+    ep.all(events, function(topics, category){
+        res.render('topic/category', {
+            me: req.user,
+            title: '分类页面',
+            topics: topics,
+            category: category
+        });
+    });
+
+    // 获取话题列表
+
+    topicLib.getTopicsByQuery({ category: id, deleted: false }, function (err, topics) {
+        ep.emit('topics', topics);
+    });
+
+    // 获取分类
+
+    topicLib.getCategoryById(id, function(err, category){
+        ep.emit('category', category);
+    });
 }

@@ -1,0 +1,47 @@
+<div class="container">
+
+    <div class="main home">
+        
+        <div class="nodes">
+            <div class="container">
+                <span class="node"><%= category.name %></span>
+            </div>
+        </div>
+
+        <div class="panel">
+            <% for(var i=0; i<topics.length; i++) { %>
+            <article>
+                <div class="item">
+                <div class="inner">
+                    <a class="author" href="/u/<%= topics[i].author.username %>">
+                        <img class="avatar" alt="<%= topics[i].author.username %>" src="https://cdn.v2ex.co/avatar/1984/54f4/171138_normal.png?m=1461906290">
+                    </a>
+                    <div class="all">
+                    <h2>
+                        <a href="/t/<%= topics[i]._id %>"><%= topics[i].title %></a>
+                    </h2>
+                    <div class="meta">
+                        <span class="node">
+                            <a href="/cat/<%= topics[i].category._id %>"><%= topics[i].category.name %></a>
+                        </span>
+                        <span class="dot"></span>
+                        <span class="last-reply">
+                            <%= moment(topics[i].create_at).fromNow() %>
+                        </span>
+                        <span class="dot"></span>
+                        <span class="up">
+                            <i class="icon icon-praise"></i>&nbsp;<s><%= topics[i].like.length %></s>
+                        </span>
+                        <span class="cmts">
+                            <i class="icon icon-comment"></i>&nbsp;<s><%= topics[i].commentsCount %></s>
+                        </span>
+                    </div>
+                    </div>
+                </div>
+                </div>
+            </article>
+            <% } %>
+        </div>
+    </div>
+
+</div>

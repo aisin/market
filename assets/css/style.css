@@ -377,17 +377,12 @@ p {
     background-color: #fafafa;
     border-bottom: 1px solid #ececec;
 }
-
-
-
-
 .nodes .node{
     padding: 4px 6px;
     color: #585858;
     display: inline-block;
 }
-
-.nodes .node:hover{
+.nodes a.node:hover{
     color: #02b875;
 }
 
@@ -680,6 +675,11 @@ article:last-child .item{
 .form-item{
     margin-bottom: 15px;
 }
+.form-item .lead{
+    margin-bottom: 8px;
+    display: block;
+    color: #888;
+}
 .form-item .fill{
     width: 100%;
     display: block;
@@ -701,11 +701,12 @@ article:last-child .item{
     vertical-align: middle;
     margin-top: -2px;
 }
-.form-item + .form-tips{
-    margin-top: -10px;
-    margin-bottom: 5px;
-    color: #999;
+.form-item .form-tips{
+    margin-top: 2px;
+    margin-bottom: -8px;
+    color: #bbb;
     font-size: 12px;
+    text-align: right;
 }
 .btn{
     width: 100%;
