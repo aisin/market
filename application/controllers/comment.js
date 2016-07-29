@@ -2,6 +2,8 @@ var Eventproxy = require('eventproxy');
 var _ = require('lodash');
 var XSS = require('xss');
 var Comment = require('../models/comment');
+var Notice = require('../models/notice');
+var topicLib = require('../libs/topic');
 var commentLib = require('../libs/comment');
 var atLib = require('../libs/at');
 var config = require('../../config.js');
@@ -43,6 +45,18 @@ exports.add = function (req, res, next) {
     var ep = new Eventproxy();
     ep.fail(next);
 
+    // 生成 Notice
+    var events = ['commentId', 'topicAuthorId'];
+    ep.all(events, function(commentId, topicAuthorId){
+        new Notice({
+            whose: topicAuthorId,
+            from: me,
+            topic: topic_id,
+            comment: commentId,
+            type: 0
+        }).save();
+    });
+
     ep.on('err', function (msg) {
         req.flash('commentAddMsg', msg);
         res.redirect('/t/' + topic_id + '#cmt');
@@ -52,8 +66,17 @@ exports.add = function (req, res, next) {
         return ep.emit('err', '评论内容不能为空');
     }
 
+    // 创建评论
+
     new Comment(_comment).save(function (err, ret) {
         res.redirect('/t/' + topic_id);
+        ep.emit('commentId', ret._id);
+    });
+
+    // 查询话题作者
+
+    topicLib.getAuthorByTopic(topic_id, function(err, author){
+        ep.emit('topicAuthorId', author._id);
     });
 }
 

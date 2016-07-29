@@ -76,3 +76,11 @@ exports.getTopicsByQuery = function (query, page, callback) {
             });
         });
 }
+
+/**
+ * 根据话题 ID 获取作者
+ */
+
+exports.getAuthorByTopic = function(topicId, callback){
+    Topic.findOne({ _id: topicId }).select('author').exec(callback);
+}
