@@ -122,7 +122,7 @@ exports.user = function (req, res, next) {
 
     // 判断是否是自己的页面
 
-    userLib.getUserByusername(username, function (err, user) {
+    userLib.getUserByUsername(username, function (err, user) {
         user.isme = user._id.equals(me);
         ep.emit('getCollect', user._id);
         ep.emit('user', user);
@@ -195,7 +195,7 @@ exports.created = function (req, res, next) {
 
     // 判断是否是自己的页面
 
-    userLib.getUserByusername(username, function (err, user) {
+    userLib.getUserByUsername(username, function (err, user) {
         user.isme = user._id.equals(me);
         ep.emit('getTopics', user._id);
         ep.emit('user', user);

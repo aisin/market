@@ -4,6 +4,7 @@ var XSS = require('xss');
 var Comment = require('../models/comment');
 var Notice = require('../models/notice');
 var topicLib = require('../libs/topic');
+var userLib = require('../libs/user');
 var commentLib = require('../libs/comment');
 var atLib = require('../libs/at');
 var config = require('../../config.js');
@@ -42,10 +43,33 @@ exports.add = function (req, res, next) {
         content: atLib.linkUsers(content) // at users
     };
 
+    // 获取被 @ 的用户名
+    var atUsers = atLib.fetchUsers(content);
+    var proxy = new Eventproxy();
+    proxy.fail(next);
+
+    if(!atUsers.length) proxy.unbind();
+
+    // 生成回复或者 @ 的 Notice
+    proxy.on('commentId', function(commentId){
+        userLib.getUsersByUsernameAry(atUsers, function(atUsersIds){
+            atUsersIds.forEach(function(item){
+                new Notice({
+                    whose: item,
+                    from: me,
+                    topic: topic_id,
+                    comment: commentId,
+                    type: 1
+                }).save();
+            });
+        });
+    });
+
+    // 生成 Notice
+
     var ep = new Eventproxy();
     ep.fail(next);
 
-    // 生成 Notice
     var events = ['commentId', 'topicAuthorId'];
     ep.all(events, function(commentId, topicAuthorId){
         new Notice({
@@ -70,6 +94,7 @@ exports.add = function (req, res, next) {
 
     new Comment(_comment).save(function (err, ret) {
         res.redirect('/t/' + topic_id);
+        proxy.emit('commentId', ret._id);
         ep.emit('commentId', ret._id);
     });
 
