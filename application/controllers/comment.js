@@ -75,8 +75,8 @@ exports.add = function (req, res, next) {
 
     // 查询话题作者
 
-    topicLib.getAuthorByTopic(topic_id, function(err, author){
-        ep.emit('topicAuthorId', author._id);
+    topicLib.getAuthorByTopic(topic_id, function(err, ret){
+        ep.emit('topicAuthorId', ret.author);
     });
 }
 

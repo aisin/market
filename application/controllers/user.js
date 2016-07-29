@@ -7,6 +7,7 @@ var Topic = require('../models/topic');
 var commentLib = require('../libs/comment');
 var userLib = require('../libs/user');
 var topicLib = require('../libs/topic');
+var noticeLib = require('../libs/notice');
 var utils = require('../common/utils');
 
 
@@ -218,15 +219,29 @@ exports.setting = function (req, res, next) {
     var me = req.user && req.user._id;
 
     userLib.getUserById(me, function(err, user){
-        user.isme = undefined;  // 个人信息页面故意不显示“修改资料”
+        user.isme = _.noop();  // 个人信息页面故意不显示“修改资料”
         res.render('user/setting', {
             me: req.user,
             title: '个人信息',
             user: user
         });
-    });
+    });  
+}
 
-    
+/**
+ * 系统消息
+ */
+
+exports.notice = function(req, res, next){
+
+    var me = req.user && req.user._id;
+    noticeLib.getAll(me, function(err, notices){
+        res.render('user/notice', {
+            title: '个人中心',
+            me: req.user,
+            notices: notices
+        });
+    });
 }
 
 /**

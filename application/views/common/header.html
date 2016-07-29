@@ -20,6 +20,10 @@
                 <li>
                     <a class="menu" href="/u/<%= me.username %>"><%= me.username %></a>
                 </li>
+
+                <li>
+                    <a class="menu" href="/setting">设置</a>
+                </li>
                 
                 <% if(me.role === 'admin') { %>
                 <li>
@@ -62,6 +66,10 @@
                         <% if (typeof me !== 'undefined') { %>
                         <li>
                             <a href="/profile"><%= me.username %></a>
+                        </li>
+
+                        <li>
+                            <a href="/setting">设置</a>
                         </li>
 
                         <% if(me.role === 'admin') { %>

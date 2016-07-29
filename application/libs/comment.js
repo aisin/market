@@ -13,7 +13,6 @@ exports.getCommentsByTopic = function(topic_id, callback){
         }])
         .sort({ create_at: 1 })
         .exec(callback);
-
 }
 
 /**

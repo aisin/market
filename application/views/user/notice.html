@@ -1,0 +1,15 @@
+<div class="container">
+    <div class="main">
+        <div class="panel">
+            <div class="notice-list">
+                <% for(var i=0; i<notices.length; i++){ %>
+                    <% if(notices[i].type == 0){ %>
+                        <%= notices[i].from.username %> 评论了你的话题：<a href="/t/<%= notices[i].topic._id%>"><%= notices[i].topic.title%></a>
+                    <% } %>
+
+                <% } %>
+
+            </div><!--/.notice-list-->
+        </div>
+    </div>
+</div>

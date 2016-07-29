@@ -31,6 +31,8 @@ module.exports = function(app){
 
     app.get('/setting', auth.userRequired, user.setting);
 
+    app.get('/notice', auth.userRequired, user.notice);
+
     app.get('/logout', user.logout);
     
 };
